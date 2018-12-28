@@ -2,20 +2,21 @@
 using System.Linq;
 using B03.EE.BlanckeK.Lib.DTO;
 using B03.EE.BlanckeK.Lib.Models;
+using B03.EE.BlanckeK.Web.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace B03.EE.BlanckeK.Api.Repositories
 {
     public class UserRepository
     {
-        private QuizContext _db;
+        private ApplicationDbContext _db;
 
-        public UserRepository(QuizContext db)
+        public UserRepository(ApplicationDbContext db)
         {
             _db = db;
         }
 
-        public List<User> GetAllInclusive()
+        public List<ApplicationUser> GetAllInclusive()
         {
             // returns a list of all users
             return _db.Users
@@ -33,7 +34,7 @@ namespace B03.EE.BlanckeK.Api.Repositories
             }).ToList();
         }
 
-        public User GetUserById(int userId)
+        public ApplicationUser GetUserById(int userId)
         {
             return GetAllInclusive().FirstOrDefault(user => user.UserId == userId);
         }
