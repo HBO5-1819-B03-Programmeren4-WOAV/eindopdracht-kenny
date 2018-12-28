@@ -88,7 +88,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "UserId", "DateTime", "FirstName", "LastName", "Password" },
-                values: new object[] { 1, new DateTime(2018, 12, 28, 13, 28, 53, 304, DateTimeKind.Local).AddTicks(3365), "Kenny", "Blancke", "Test" });
+                values: new object[] { 1, new DateTime(2018, 12, 28, 13, 49, 5, 923, DateTimeKind.Local).AddTicks(5052), "Kenny", "Blancke", "Test" });
 
             migrationBuilder.InsertData(
                 table: "Quiz",

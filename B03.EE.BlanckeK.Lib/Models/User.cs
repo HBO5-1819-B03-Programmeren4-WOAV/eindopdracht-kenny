@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace B03.EE.BlanckeK.Models
+namespace B03.EE.BlanckeK.Lib.Models
 {
     public class User
     {

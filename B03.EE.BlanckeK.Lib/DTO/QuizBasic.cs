@@ -1,4 +1,4 @@
-﻿namespace B03.EE.BlanckeK.DTO
+﻿namespace B03.EE.BlanckeK.Lib.DTO
 {
     public class QuizBasic
     {

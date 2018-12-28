@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B03.EE.BlanckeK.Api.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20181228122853_initial1")]
+    [Migration("20181228124906_initial1")]
     partial class initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("B03.EE.BlanckeK.Models.Answer", b =>
+            modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Answer", b =>
                 {
                     b.Property<int>("AnswerId")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         });
                 });
 
-            modelBuilder.Entity("B03.EE.BlanckeK.Models.Question", b =>
+            modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Question", b =>
                 {
                     b.Property<int>("QuestionId")
                         .ValueGeneratedOnAdd()
@@ -163,7 +163,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         });
                 });
 
-            modelBuilder.Entity("B03.EE.BlanckeK.Models.Quiz", b =>
+            modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Quiz", b =>
                 {
                     b.Property<int>("QuizId")
                         .ValueGeneratedOnAdd()
@@ -188,7 +188,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         });
                 });
 
-            modelBuilder.Entity("B03.EE.BlanckeK.Models.User", b =>
+            modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -210,32 +210,32 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         new
                         {
                             UserId = 1,
-                            DateTime = new DateTime(2018, 12, 28, 13, 28, 53, 304, DateTimeKind.Local).AddTicks(3365),
+                            DateTime = new DateTime(2018, 12, 28, 13, 49, 5, 923, DateTimeKind.Local).AddTicks(5052),
                             FirstName = "Kenny",
                             LastName = "Blancke",
                             Password = "Test"
                         });
                 });
 
-            modelBuilder.Entity("B03.EE.BlanckeK.Models.Answer", b =>
+            modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Answer", b =>
                 {
-                    b.HasOne("B03.EE.BlanckeK.Models.Question")
+                    b.HasOne("B03.EE.BlanckeK.Lib.Models.Question")
                         .WithMany("AnswerList")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("B03.EE.BlanckeK.Models.Question", b =>
+            modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Question", b =>
                 {
-                    b.HasOne("B03.EE.BlanckeK.Models.Quiz")
+                    b.HasOne("B03.EE.BlanckeK.Lib.Models.Quiz")
                         .WithMany("Questions")
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("B03.EE.BlanckeK.Models.Quiz", b =>
+            modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Quiz", b =>
                 {
-                    b.HasOne("B03.EE.BlanckeK.Models.User")
+                    b.HasOne("B03.EE.BlanckeK.Lib.Models.User")
                         .WithMany("Quizzes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using B03.EE.BlanckeK.DTO;
-using B03.EE.BlanckeK.Models;
+using B03.EE.BlanckeK.Lib.DTO;
+using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace B03.EE.BlanckeK.Api.Repositories

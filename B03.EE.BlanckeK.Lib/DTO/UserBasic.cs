@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace B03.EE.BlanckeK.DTO
+﻿
+namespace B03.EE.BlanckeK.Lib.DTO
 {
     public class UserBasic
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using B03.EE.BlanckeK.Models;
+using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace B03.EE.BlanckeK.Api
