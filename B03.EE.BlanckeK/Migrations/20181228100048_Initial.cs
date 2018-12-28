@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace B03.EE.BlanckeK.Migrations
+namespace B03.EE.BlanckeK.Api.Migrations
 {
     public partial class Initial : Migration
     {

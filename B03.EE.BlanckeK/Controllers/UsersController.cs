@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using B03.EE.BlanckeK.Repositories;
+﻿using B03.EE.BlanckeK.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace B03.EE.BlanckeK.Controllers
+namespace B03.EE.BlanckeK.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

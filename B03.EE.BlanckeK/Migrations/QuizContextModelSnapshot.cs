@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace B03.EE.BlanckeK.Migrations
+namespace B03.EE.BlanckeK.Api.Migrations
 {
     [DbContext(typeof(QuizContext))]
     partial class QuizContextModelSnapshot : ModelSnapshot

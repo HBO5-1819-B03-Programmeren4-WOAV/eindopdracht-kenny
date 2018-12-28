@@ -1,4 +1,4 @@
-﻿using B03.EE.BlanckeK.Repositories;
+﻿using B03.EE.BlanckeK.Api.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 
 
-namespace B03.EE.BlanckeK
+namespace B03.EE.BlanckeK.Api
 {
     public class Startup
     {

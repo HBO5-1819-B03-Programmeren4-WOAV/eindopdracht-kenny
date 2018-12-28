@@ -2,7 +2,7 @@
 using B03.EE.BlanckeK.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace B03.EE.BlanckeK
+namespace B03.EE.BlanckeK.Api
 {
     public class QuizContext : DbContext
     {

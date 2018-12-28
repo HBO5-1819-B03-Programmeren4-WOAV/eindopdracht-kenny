@@ -4,7 +4,7 @@ using B03.EE.BlanckeK.DTO;
 using B03.EE.BlanckeK.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace B03.EE.BlanckeK.Repositories
+namespace B03.EE.BlanckeK.Api.Repositories
 {
     public class QuizRepository
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using B03.EE.BlanckeK.DTO;
 using B03.EE.BlanckeK.Models;
 
-namespace B03.EE.BlanckeK.Repositories
+namespace B03.EE.BlanckeK.Api.Repositories
 {
     public class AnswerRepository
     {

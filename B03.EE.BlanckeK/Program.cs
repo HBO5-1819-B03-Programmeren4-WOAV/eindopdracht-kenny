@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 
 
-namespace B03.EE.BlanckeK
+namespace B03.EE.BlanckeK.Api
 {
     public class Program
     {
