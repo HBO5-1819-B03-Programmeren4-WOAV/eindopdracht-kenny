@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace B03.EE.BlanckeK.Api.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,7 +88,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
             migrationBuilder.InsertData(
                 table: "User",
                 columns: new[] { "UserId", "DateTime", "FirstName", "LastName", "Password" },
-                values: new object[] { 1, new DateTime(2018, 12, 28, 11, 0, 48, 626, DateTimeKind.Local).AddTicks(9172), "Kenny", "Blancke", "Test" });
+                values: new object[] { 1, new DateTime(2018, 12, 28, 13, 28, 53, 304, DateTimeKind.Local).AddTicks(3365), "Kenny", "Blancke", "Test" });
 
             migrationBuilder.InsertData(
                 table: "Quiz",

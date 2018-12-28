@@ -1,4 +1,5 @@
-﻿using B03.EE.BlanckeK.Repositories;
+﻿
+using B03.EE.BlanckeK.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace B03.EE.BlanckeK.Api.Controllers
