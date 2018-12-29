@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using B03.EE.BlanckeK.Lib.DTO;
 using B03.EE.BlanckeK.Lib.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace B03.EE.BlanckeK.Api.Repositories
 {
@@ -41,6 +45,55 @@ namespace B03.EE.BlanckeK.Api.Repositories
         public List<Answer> GetAnswersForQuestion(int questionId)
         {
             return GetAllAnswers().Where(q => q.QuestionId == questionId).ToList();
+        }
+
+        // update a answer
+        public async Task<Answer> Update(Answer answer)
+        {
+            try
+            {
+                _db.Entry(answer).State = EntityState.Modified;
+                await _db.SaveChangesAsync();
+            }
+            catch (DBConcurrencyException)
+            {
+                if (!AnswerExists(answer.AnswerId))
+                {
+                    return null;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return answer;
+        }
+
+        // Add answer
+        public async Task<Answer> AddAnswer(Answer answer)
+        {
+            _db.Answers.Add(answer);
+            await _db.SaveChangesAsync();
+            return answer;
+        }
+
+        // Delete answer
+        public async Task<Answer> Delete(int id)
+        {
+            var answer = await _db.Answers.FindAsync(id);
+            if (answer == null)
+            {
+                return null;
+            }
+            _db.Answers.Remove(answer);
+            await _db.SaveChangesAsync();
+            return answer;
+        }
+
+
+        private bool AnswerExists(int answerId)
+        {
+            return _db.Answers.Any(a => a.AnswerId == answerId);
         }
     }
 }
