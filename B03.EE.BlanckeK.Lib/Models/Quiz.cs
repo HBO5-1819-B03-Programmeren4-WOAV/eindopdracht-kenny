@@ -9,7 +9,9 @@ namespace B03.EE.BlanckeK.Lib.Models
         public int QuizId { get; set; }
         public string QuizName { get; set; }
 
-        public int UserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
+        public string ApplicationUserId { get; set; }
+
 
         public ICollection<Question> Questions { get; set; }
     }

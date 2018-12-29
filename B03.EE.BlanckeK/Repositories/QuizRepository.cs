@@ -41,9 +41,9 @@ namespace B03.EE.BlanckeK.Api.Repositories
         }
 
         // returns a list off all quizzes from a specific user
-        public List<Quiz> GetQuizzesForUser(int userId)
+        public List<Quiz> GetQuizzesForUser(string userId)
         {
-            return GetAllQuizzes().Where(q => q.UserId == userId).ToList();
+            return GetAllQuizzes().Where(q => q.ApplicationUserId == userId).ToList();
         }
     }
 }

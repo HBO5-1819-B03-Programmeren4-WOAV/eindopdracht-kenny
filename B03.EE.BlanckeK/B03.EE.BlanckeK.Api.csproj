@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\B03.EE.BlanckeK.Lib\B03.EE.BlanckeK.Lib.csproj" />
-    <ProjectReference Include="..\B03.EE.BlanckeK.Web\B03.EE.BlanckeK.Web.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,16 +2,15 @@
 using System.Linq;
 using B03.EE.BlanckeK.Lib.DTO;
 using B03.EE.BlanckeK.Lib.Models;
-using B03.EE.BlanckeK.Web.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace B03.EE.BlanckeK.Api.Repositories
 {
     public class UserRepository
     {
-        private ApplicationDbContext _db;
+        private QuizContext _db;
 
-        public UserRepository(ApplicationDbContext db)
+        public UserRepository(QuizContext db)
         {
             _db = db;
         }

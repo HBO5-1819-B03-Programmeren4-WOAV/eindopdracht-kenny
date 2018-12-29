@@ -40,9 +40,9 @@ namespace B03.EE.BlanckeK.Api.Controllers
         // GET api/quiz/user/1
         [HttpGet]
         [Route("user/{userId}")]
-        public IActionResult GetQuizzesForUser(int userId)
+        public IActionResult GetQuizzesForUser(string ApplicationUserId)
         {
-            return Ok(_repository.GetQuizzesForUser(userId));
+            return Ok(_repository.GetQuizzesForUser(ApplicationUserId));
         }
     }
 }
