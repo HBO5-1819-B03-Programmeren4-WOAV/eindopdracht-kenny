@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <UserSecretsId>aspnet-B03.EE.BlanckeK.Web-E160C641-520E-4B6B-B459-55A5AFBAD4CD</UserSecretsId>
+    <UserSecretsId>aspnet-B03.EE.BlanckeK.Web-CBBBED33-D66C-4428-B8FC-B0D60F4DDEDA</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 

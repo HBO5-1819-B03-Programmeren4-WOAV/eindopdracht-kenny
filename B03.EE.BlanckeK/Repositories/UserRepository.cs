@@ -18,10 +18,8 @@ namespace B03.EE.BlanckeK.Api.Repositories
         public List<ApplicationUser> GetAllInclusive()
         {
             // returns a list of all users
-            return _db.Users
-                .Include(a => a.Quizzes)
-                .ThenInclude(a => a.Questions)
-                .ThenInclude(a => a.AnswerList).ToList();
+            return _db?.Users?.Include(a => a.Quizzes)?.ThenInclude(a => a.Questions)?.ThenInclude(a => a.AnswerList)?
+                .ToList();
         }
 
         public List<UserBasic> UserBasic()

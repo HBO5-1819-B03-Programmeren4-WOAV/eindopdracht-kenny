@@ -13,30 +13,27 @@ namespace B03.EE.BlanckeK.Api
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             base.OnModelCreating(builder);
-
             builder.Entity<ApplicationUser>()
-                .ToTable("ApplicationUser")
+                .ToTable("AspNetUsers")
                 .HasData(
                     new ApplicationUser
                     {
-                        DateTime = DateTime.Now,
                         FirstName = "Kenny",
                         LastName = "Blancke",
                         UserId = 1,
                         Id = "KennyBlancke"
                     });
             builder.Entity<Quiz>()
-                .ToTable("Quiz")
-                .HasData(
-                    new Quiz
-                    {
-                        QuizId = 1,
-                        QuizName = "Eerste quiz",
-                        ApplicationUserId = "KennyBlancke"
-                        
-                    });
+               .ToTable("Quiz")
+               .HasData(
+                   new Quiz
+                   {
+                       QuizId = 1,
+                       QuizName = "Eerste quiz",
+                       ApplicationUserId = "KennyBlancke"
+
+                   });
             builder.Entity<Answer>()
                 .ToTable("Answer")
                 .HasData(
@@ -146,10 +143,13 @@ namespace B03.EE.BlanckeK.Api
                         QuestionText = "Derde vraag?",
                         QuizId = 1
                     });
+
         }
+
+        public new DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Quiz> Quizzes { get; set; }
-        public new DbSet<ApplicationUser> Users { get; set; }
+
     }
 }

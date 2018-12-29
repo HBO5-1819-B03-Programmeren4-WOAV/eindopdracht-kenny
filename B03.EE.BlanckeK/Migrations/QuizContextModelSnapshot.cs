@@ -134,8 +134,6 @@ namespace B03.EE.BlanckeK.Api.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<DateTime>("DateTime");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -165,7 +163,9 @@ namespace B03.EE.BlanckeK.Api.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<int>("UserId");
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
@@ -180,15 +180,14 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("ApplicationUser");
+                    b.ToTable("AspNetUsers");
 
                     b.HasData(
                         new
                         {
                             Id = "KennyBlancke",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "080e6164-7564-404e-8e47-3877dac36ed1",
-                            DateTime = new DateTime(2018, 12, 29, 13, 23, 37, 943, DateTimeKind.Local).AddTicks(6960),
+                            ConcurrencyStamp = "86ec5016-dbef-469f-b5e2-3ccd7b313f48",
                             EmailConfirmed = false,
                             FirstName = "Kenny",
                             LastName = "Blancke",
