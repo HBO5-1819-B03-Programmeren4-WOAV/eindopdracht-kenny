@@ -21,17 +21,16 @@ namespace B03.EE.BlanckeK.Api.Migrations
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Answer", b =>
                 {
-                    b.Property<int>("AnswerId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("AnswerText");
 
                     b.Property<bool>("IsCorrectAnswer");
 
-                    b.Property<int>("QuestionId");
+                    b.Property<string>("QuestionId");
 
-                    b.HasKey("AnswerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("QuestionId");
 
@@ -40,87 +39,87 @@ namespace B03.EE.BlanckeK.Api.Migrations
                     b.HasData(
                         new
                         {
-                            AnswerId = 1,
+                            Id = "1",
                             AnswerText = "Correct antwoord op eerste vraag",
                             IsCorrectAnswer = true,
-                            QuestionId = 1
+                            QuestionId = "1"
                         },
                         new
                         {
-                            AnswerId = 2,
+                            Id = "2",
                             AnswerText = "Eerste foutieve antwoord op eerste vraag",
                             IsCorrectAnswer = false,
-                            QuestionId = 1
+                            QuestionId = "1"
                         },
                         new
                         {
-                            AnswerId = 3,
+                            Id = "3",
                             AnswerText = "tweede foutieve antwoord op eerste vraag",
                             IsCorrectAnswer = false,
-                            QuestionId = 1
+                            QuestionId = "1"
                         },
                         new
                         {
-                            AnswerId = 4,
+                            Id = "4",
                             AnswerText = "derde foutieve antwoord op eerste vraag",
                             IsCorrectAnswer = false,
-                            QuestionId = 1
+                            QuestionId = "1"
                         },
                         new
                         {
-                            AnswerId = 5,
+                            Id = "5",
                             AnswerText = "Eerste foutieve antwoord op tweede vraag",
                             IsCorrectAnswer = false,
-                            QuestionId = 2
+                            QuestionId = "2"
                         },
                         new
                         {
-                            AnswerId = 6,
+                            Id = "6",
                             AnswerText = "Tweede foutieve antwoord op tweede vraag",
                             IsCorrectAnswer = false,
-                            QuestionId = 2
+                            QuestionId = "2"
                         },
                         new
                         {
-                            AnswerId = 7,
+                            Id = "7",
                             AnswerText = "Juiste antwoord op tweede vraag",
                             IsCorrectAnswer = true,
-                            QuestionId = 2
+                            QuestionId = "2"
                         },
                         new
                         {
-                            AnswerId = 8,
+                            Id = "8",
                             AnswerText = "derde foutieve antwoord op tweede vraag",
                             IsCorrectAnswer = false,
-                            QuestionId = 2
+                            QuestionId = "2"
                         },
                         new
                         {
-                            AnswerId = 9,
+                            Id = "9",
                             AnswerText = "Correct antwoord op derde vraag",
                             IsCorrectAnswer = true,
-                            QuestionId = 3
+                            QuestionId = "3"
                         },
                         new
                         {
-                            AnswerId = 10,
+                            Id = "10",
                             AnswerText = "Eerste foutieve antwoord op derde vraag",
                             IsCorrectAnswer = false,
-                            QuestionId = 3
+                            QuestionId = "3"
                         },
                         new
                         {
-                            AnswerId = 11,
+                            Id = "11",
                             AnswerText = "tweede foutieve antwoord op derde vraag",
                             IsCorrectAnswer = false,
-                            QuestionId = 3
+                            QuestionId = "3"
                         },
                         new
                         {
-                            AnswerId = 12,
+                            Id = "12",
                             AnswerText = "derde foutieve antwoord op derde vraag",
                             IsCorrectAnswer = false,
-                            QuestionId = 3
+                            QuestionId = "3"
                         });
                 });
 
@@ -163,10 +162,6 @@ namespace B03.EE.BlanckeK.Api.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
@@ -185,30 +180,28 @@ namespace B03.EE.BlanckeK.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "KennyBlancke",
+                            Id = "KennyBlancke@icloud.com",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "86ec5016-dbef-469f-b5e2-3ccd7b313f48",
+                            ConcurrencyStamp = "1a59811f-b50d-40cc-b9e3-6e4a816c171f",
                             EmailConfirmed = false,
                             FirstName = "Kenny",
                             LastName = "Blancke",
                             LockoutEnabled = false,
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserId = 1
+                            TwoFactorEnabled = false
                         });
                 });
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Question", b =>
                 {
-                    b.Property<int>("QuestionId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("QuestionText");
 
-                    b.Property<int>("QuizId");
+                    b.Property<string>("QuizId");
 
-                    b.HasKey("QuestionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("QuizId");
 
@@ -217,35 +210,34 @@ namespace B03.EE.BlanckeK.Api.Migrations
                     b.HasData(
                         new
                         {
-                            QuestionId = 1,
+                            Id = "1",
                             QuestionText = "Eerste vraag?",
-                            QuizId = 1
+                            QuizId = "1"
                         },
                         new
                         {
-                            QuestionId = 2,
+                            Id = "2",
                             QuestionText = "Tweede vraag?",
-                            QuizId = 1
+                            QuizId = "1"
                         },
                         new
                         {
-                            QuestionId = 3,
+                            Id = "3",
                             QuestionText = "Derde vraag?",
-                            QuizId = 1
+                            QuizId = "1"
                         });
                 });
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Quiz", b =>
                 {
-                    b.Property<int>("QuizId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ApplicationUserId");
 
                     b.Property<string>("QuizName");
 
-                    b.HasKey("QuizId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 
@@ -254,8 +246,8 @@ namespace B03.EE.BlanckeK.Api.Migrations
                     b.HasData(
                         new
                         {
-                            QuizId = 1,
-                            ApplicationUserId = "KennyBlancke",
+                            Id = "1",
+                            ApplicationUserId = "KennyBlancke@icloud.com",
                             QuizName = "Eerste quiz"
                         });
                 });
@@ -374,16 +366,14 @@ namespace B03.EE.BlanckeK.Api.Migrations
                 {
                     b.HasOne("B03.EE.BlanckeK.Lib.Models.Question")
                         .WithMany("AnswerList")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("QuestionId");
                 });
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Question", b =>
                 {
                     b.HasOne("B03.EE.BlanckeK.Lib.Models.Quiz")
                         .WithMany("Questions")
-                        .HasForeignKey("QuizId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("QuizId");
                 });
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Quiz", b =>

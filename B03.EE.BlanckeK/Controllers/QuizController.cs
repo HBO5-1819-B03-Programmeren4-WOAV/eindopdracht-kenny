@@ -1,48 +1,51 @@
-﻿using B03.EE.BlanckeK.Api.Repositories;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using B03.EE.BlanckeK.Api.Repositories;
+using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace B03.EE.BlanckeK.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuizController : ControllerBase
+    public class QuizController : ControllerCrudBase<Quiz, QuizRepository>
     {
-        private QuizRepository _repository;
-
-        public QuizController(QuizRepository repository)
+        public QuizController(QuizRepository repository) : base(repository)
         {
-            _repository = repository;
         }
 
         // GET api/quiz
         [HttpGet]
-        public IActionResult GetAllQuizzes()
+        public override async Task<IActionResult> Get()
         {
-            return Ok(_repository.GetAllQuizzes());
+            return Ok(await Repository.GetAllInclusive());
         }
+
+        // GET api/Quiz/1
+        [HttpGet]
+        [Route("{id}")]
+        public override async Task<IActionResult> Get(string id)
+        {
+            return Ok(await Repository.GetAllInclusiveById(id));
+        }
+
 
         // GET api/quiz/basic
         [HttpGet]
         [Route("Basic")]
-        public IActionResult GetAllQuizzesBasic()
+        public async Task<IActionResult> GetQuizzesBasic()
         {
-            return Ok(_repository.GetQuizBasics());
-        }
-
-        // Get api/quiz/1
-        [HttpGet]
-        [Route("{quizId}")]
-        public IActionResult GetQuizById(int quizId)
-        {
-            return Ok(_repository.GetQuizById(quizId));
+            return Ok(await Repository.GetQuizBasics());
         }
 
         // GET api/quiz/user/1
         [HttpGet]
         [Route("user/{userId}")]
-        public IActionResult GetQuizzesForUser(string ApplicationUserId)
+        public async Task<IActionResult> GetQuizzesForUser(string userId)
         {
-            return Ok(_repository.GetQuizzesForUser(ApplicationUserId));
+            return Ok(await Repository.ListFiltered(user => user.Id == userId));
         }
     }
 }

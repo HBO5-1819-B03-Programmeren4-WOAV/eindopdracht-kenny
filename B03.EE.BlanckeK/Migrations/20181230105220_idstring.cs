@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace B03.EE.BlanckeK.Api.Migrations
 {
-    public partial class identity : Migration
+    public partial class idstring : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,8 +41,6 @@ namespace B03.EE.BlanckeK.Api.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true)
                 },
@@ -161,14 +159,13 @@ namespace B03.EE.BlanckeK.Api.Migrations
                 name: "Quiz",
                 columns: table => new
                 {
-                    QuizId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     QuizName = table.Column<string>(nullable: true),
                     ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Quiz", x => x.QuizId);
+                    table.PrimaryKey("PK_Quiz", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Quiz_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
@@ -181,85 +178,83 @@ namespace B03.EE.BlanckeK.Api.Migrations
                 name: "Questions",
                 columns: table => new
                 {
-                    QuestionId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     QuestionText = table.Column<string>(nullable: true),
-                    QuizId = table.Column<int>(nullable: false)
+                    QuizId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Questions", x => x.QuestionId);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Questions_Quiz_QuizId",
                         column: x => x.QuizId,
                         principalTable: "Quiz",
-                        principalColumn: "QuizId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Answer",
                 columns: table => new
                 {
-                    AnswerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     AnswerText = table.Column<string>(nullable: true),
                     IsCorrectAnswer = table.Column<bool>(nullable: false),
-                    QuestionId = table.Column<int>(nullable: false)
+                    QuestionId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Answer", x => x.AnswerId);
+                    table.PrimaryKey("PK_Answer", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Answer_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "QuestionId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserId", "UserName" },
-                values: new object[] { "KennyBlancke", 0, "86ec5016-dbef-469f-b5e2-3ccd7b313f48", null, false, "Kenny", "Blancke", false, null, null, null, null, null, false, null, false, 1, null });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "KennyBlancke@icloud.com", 0, "1a59811f-b50d-40cc-b9e3-6e4a816c171f", null, false, "Kenny", "Blancke", false, null, null, null, null, null, false, null, false, null });
 
             migrationBuilder.InsertData(
                 table: "Quiz",
-                columns: new[] { "QuizId", "ApplicationUserId", "QuizName" },
-                values: new object[] { 1, "KennyBlancke", "Eerste quiz" });
+                columns: new[] { "Id", "ApplicationUserId", "QuizName" },
+                values: new object[] { "1", "KennyBlancke@icloud.com", "Eerste quiz" });
 
             migrationBuilder.InsertData(
                 table: "Questions",
-                columns: new[] { "QuestionId", "QuestionText", "QuizId" },
-                values: new object[] { 1, "Eerste vraag?", 1 });
+                columns: new[] { "Id", "QuestionText", "QuizId" },
+                values: new object[] { "1", "Eerste vraag?", "1" });
 
             migrationBuilder.InsertData(
                 table: "Questions",
-                columns: new[] { "QuestionId", "QuestionText", "QuizId" },
-                values: new object[] { 2, "Tweede vraag?", 1 });
+                columns: new[] { "Id", "QuestionText", "QuizId" },
+                values: new object[] { "2", "Tweede vraag?", "1" });
 
             migrationBuilder.InsertData(
                 table: "Questions",
-                columns: new[] { "QuestionId", "QuestionText", "QuizId" },
-                values: new object[] { 3, "Derde vraag?", 1 });
+                columns: new[] { "Id", "QuestionText", "QuizId" },
+                values: new object[] { "3", "Derde vraag?", "1" });
 
             migrationBuilder.InsertData(
                 table: "Answer",
-                columns: new[] { "AnswerId", "AnswerText", "IsCorrectAnswer", "QuestionId" },
+                columns: new[] { "Id", "AnswerText", "IsCorrectAnswer", "QuestionId" },
                 values: new object[,]
                 {
-                    { 1, "Correct antwoord op eerste vraag", true, 1 },
-                    { 2, "Eerste foutieve antwoord op eerste vraag", false, 1 },
-                    { 3, "tweede foutieve antwoord op eerste vraag", false, 1 },
-                    { 4, "derde foutieve antwoord op eerste vraag", false, 1 },
-                    { 5, "Eerste foutieve antwoord op tweede vraag", false, 2 },
-                    { 6, "Tweede foutieve antwoord op tweede vraag", false, 2 },
-                    { 7, "Juiste antwoord op tweede vraag", true, 2 },
-                    { 8, "derde foutieve antwoord op tweede vraag", false, 2 },
-                    { 9, "Correct antwoord op derde vraag", true, 3 },
-                    { 10, "Eerste foutieve antwoord op derde vraag", false, 3 },
-                    { 11, "tweede foutieve antwoord op derde vraag", false, 3 },
-                    { 12, "derde foutieve antwoord op derde vraag", false, 3 }
+                    { "1", "Correct antwoord op eerste vraag", true, "1" },
+                    { "2", "Eerste foutieve antwoord op eerste vraag", false, "1" },
+                    { "3", "tweede foutieve antwoord op eerste vraag", false, "1" },
+                    { "4", "derde foutieve antwoord op eerste vraag", false, "1" },
+                    { "5", "Eerste foutieve antwoord op tweede vraag", false, "2" },
+                    { "6", "Tweede foutieve antwoord op tweede vraag", false, "2" },
+                    { "7", "Juiste antwoord op tweede vraag", true, "2" },
+                    { "8", "derde foutieve antwoord op tweede vraag", false, "2" },
+                    { "9", "Correct antwoord op derde vraag", true, "3" },
+                    { "10", "Eerste foutieve antwoord op derde vraag", false, "3" },
+                    { "11", "tweede foutieve antwoord op derde vraag", false, "3" },
+                    { "12", "derde foutieve antwoord op derde vraag", false, "3" }
                 });
 
             migrationBuilder.CreateIndex(

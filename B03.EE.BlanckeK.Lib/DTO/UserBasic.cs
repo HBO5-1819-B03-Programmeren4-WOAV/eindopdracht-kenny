@@ -1,9 +1,9 @@
-﻿
+﻿using B03.EE.BlanckeK.Lib.Models;
+
 namespace B03.EE.BlanckeK.Lib.DTO
 {
-    public class UserBasic
+    public class UserBasic : EntityBase
     {
-        public int UserId { get; set; }
         public string UserName { get; set; }
     }
 }

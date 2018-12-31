@@ -1,8 +1,9 @@
-﻿namespace B03.EE.BlanckeK.Lib.DTO
+﻿using B03.EE.BlanckeK.Lib.Models;
+
+namespace B03.EE.BlanckeK.Lib.DTO
 {
-    public class QuestionBasic
+    public class QuestionBasic : EntityBase
     {
-        public int Id { get; set; }
         public string Question { get; set; }
     }
 }

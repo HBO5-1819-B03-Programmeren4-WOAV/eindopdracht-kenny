@@ -31,10 +31,10 @@ namespace B03.EE.BlanckeK.Api.Controllers
 
         // Get api/users/1
         [HttpGet]
-        [Route("{userId}")]
-        public IActionResult GetUserById(int userId)
+        [Route("{id}")]
+        public IActionResult GetUserById(string id)
         {
-            return Ok(_repository.GetUserById(userId));
+            return Ok(_repository.GetUserById(id));
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace B03.EE.BlanckeK.Lib.DTO
+﻿using B03.EE.BlanckeK.Lib.Models;
+
+namespace B03.EE.BlanckeK.Lib.DTO
 {
-    public class QuizBasic
+    public class QuizBasic : EntityBase
     {
-        public int QuizId { get; set; }
         public string QuizName { get; set; }
+        public string ApplicationUserId { get; set; }
     }
 }

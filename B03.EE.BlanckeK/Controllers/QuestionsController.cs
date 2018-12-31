@@ -1,41 +1,33 @@
-﻿
+﻿using System.Threading.Tasks;
 using B03.EE.BlanckeK.Api.Repositories;
+using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace B03.EE.BlanckeK.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionsController : ControllerBase
+    public class QuestionsController : ControllerCrudBase<Question, QuestionRepository>
     {
-        private QuestionRepository _repository;
 
-        public QuestionsController(QuestionRepository repository)
+        public QuestionsController(QuestionRepository repository) : base(repository)
         {
-            _repository = repository;
         }
 
-        // GET api/questions
+        // GET api/quiz
         [HttpGet]
-        public IActionResult GetAllQuestions()
+        public override async Task<IActionResult> Get()
         {
-            return Ok(_repository.GetAllQuestions());
+            return Ok(await Repository.GetAllInclusive());
         }
+
 
         // GET api/questions/basic
         [HttpGet]
         [Route("Basic")]
-        public IActionResult GetQuestionBasic()
+        public async Task<IActionResult> GetQuestionBasic()
         {
-            return Ok(_repository.QuestionBasic());
-        }
-
-        // Get api/questions/quiz/1
-        [HttpGet]
-        [Route("quiz/{quizId}")]
-        public IActionResult GetQuestionsForQuiz(int quizId)
-        {
-            return Ok(_repository.GetQuestionsByQuizId(quizId));
+            return Ok(await Repository.QuestionBasic());
         }
     }
 }

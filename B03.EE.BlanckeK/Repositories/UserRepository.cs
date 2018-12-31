@@ -26,14 +26,14 @@ namespace B03.EE.BlanckeK.Api.Repositories
         {
             return _db.Users.Select(q => new UserBasic
             {
-                UserId = q.UserId,
+                Id = q.Id,
                 UserName = $"{q.FirstName} {q.LastName}"
             }).ToList();
         }
 
-        public ApplicationUser GetUserById(int userId)
+        public ApplicationUser GetUserById(string id)
         {
-            return GetAllInclusive().FirstOrDefault(user => user.UserId == userId);
+            return GetAllInclusive().FirstOrDefault(user => user.Id == id);
         }
     }
 }

@@ -1,42 +1,32 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using B03.EE.BlanckeK.Api.Repositories.Base;
 using B03.EE.BlanckeK.Lib.DTO;
 using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace B03.EE.BlanckeK.Api.Repositories
 {
-    public class QuestionRepository
+    public class QuestionRepository : MappingRepository<Question>
     {
-        private QuizContext _db;
-
-        public QuestionRepository(QuizContext db)
+        public QuestionRepository(QuizContext context, IMapper mapper) : base(context, mapper)
         {
-            _db = db;
         }
 
-        // returns a list of all questions
-        public List<Question> GetAllQuestions()
+        // returns a list of all the quizzes
+        public async Task<List<Question>> GetAllInclusive()
         {
-            return _db.Questions
-                .Include(a => a.AnswerList)
-                .ToList();
-        }
-
-        // returns a list of all questions related to a given quiz
-        public List<Question> GetQuestionsByQuizId(int quizId)
-        {
-            return GetAllQuestions().Where(question => question.QuizId == quizId).ToList();
+            return await GetAll()
+                .Include(q => q.AnswerList)
+                .ToListAsync();
         }
 
         // returns a list of all questions but no to detailed
-        public List<QuestionBasic> QuestionBasic()
+        public async Task<List<QuestionBasic>> QuestionBasic()
         {
-            return _db.Questions.Select(q => new QuestionBasic
-            {
-                Question = q.QuestionText,
-                Id = q.QuestionId
-            }).ToList();
+            return await Db.Questions.ProjectTo<QuestionBasic>(Mapper.ConfigurationProvider).ToListAsync();
         }
     }
 }

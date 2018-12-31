@@ -1,5 +1,4 @@
-﻿using System;
-using B03.EE.BlanckeK.Lib.Models;
+﻿using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,17 +20,16 @@ namespace B03.EE.BlanckeK.Api
                     {
                         FirstName = "Kenny",
                         LastName = "Blancke",
-                        UserId = 1,
-                        Id = "KennyBlancke"
+                        Id = "KennyBlancke@icloud.com"
                     });
             builder.Entity<Quiz>()
                .ToTable("Quiz")
                .HasData(
                    new Quiz
                    {
-                       QuizId = 1,
+                       Id = "1",
                        QuizName = "Eerste quiz",
-                       ApplicationUserId = "KennyBlancke"
+                       ApplicationUserId = "KennyBlancke@icloud.com"
 
                    });
             builder.Entity<Answer>()
@@ -39,85 +37,85 @@ namespace B03.EE.BlanckeK.Api
                 .HasData(
                     new Answer
                     {
-                        AnswerId = 1,
-                        QuestionId = 1,
+                        Id = "1",
+                        QuestionId = "1",
                         AnswerText = "Correct antwoord op eerste vraag",
                         IsCorrectAnswer = true
                     },
                     new Answer
                     {
-                        AnswerId = 2,
-                        QuestionId = 1,
+                        Id = "2",
+                        QuestionId = "1",
                         AnswerText = "Eerste foutieve antwoord op eerste vraag",
                         IsCorrectAnswer = false
                     },
                     new Answer
                     {
-                        AnswerId = 3,
-                        QuestionId = 1,
+                        Id = "3",
+                        QuestionId = "1",
                         AnswerText = "tweede foutieve antwoord op eerste vraag",
                         IsCorrectAnswer = false
                     },
                     new Answer
                     {
-                        AnswerId = 4,
-                        QuestionId = 1,
+                        Id = "4",
+                        QuestionId = "1",
                         AnswerText = "derde foutieve antwoord op eerste vraag",
                         IsCorrectAnswer = false
                     },
                     new Answer
                     {
-                        AnswerId = 5,
-                        QuestionId = 2,
+                        Id = "5",
+                        QuestionId = "2",
                         AnswerText = "Eerste foutieve antwoord op tweede vraag",
                         IsCorrectAnswer = false
                     },
                     new Answer
                     {
-                        AnswerId = 6,
-                        QuestionId = 2,
+                        Id = "6",
+                        QuestionId = "2",
                         AnswerText = "Tweede foutieve antwoord op tweede vraag",
                         IsCorrectAnswer = false
                     },
                     new Answer
                     {
-                        AnswerId = 7,
-                        QuestionId = 2,
+                        Id = "7",
+                        QuestionId = "2",
                         AnswerText = "Juiste antwoord op tweede vraag",
                         IsCorrectAnswer = true
                     },
                     new Answer
                     {
-                        AnswerId = 8,
-                        QuestionId = 2,
+                        Id = "8",
+                        QuestionId = "2",
                         AnswerText = "derde foutieve antwoord op tweede vraag",
                         IsCorrectAnswer = false
                     },
                     new Answer
                     {
-                        AnswerId = 9,
-                        QuestionId = 3,
+                        Id = "9",
+                        QuestionId = "3",
                         AnswerText = "Correct antwoord op derde vraag",
                         IsCorrectAnswer = true
                     },
                     new Answer
                     {
-                        AnswerId = 10,
-                        QuestionId = 3,
+                        Id = "10",
+                        QuestionId = "3",
                         AnswerText = "Eerste foutieve antwoord op derde vraag",
                         IsCorrectAnswer = false
                     },
                     new Answer
                     {
-                        AnswerId = 11,
-                        QuestionId = 3,
+                        Id = "11",
+                        QuestionId = "3",
                         AnswerText = "tweede foutieve antwoord op derde vraag",
                         IsCorrectAnswer = false
                     },
                     new Answer
                     {
-                        AnswerId = 12,
-                        QuestionId = 3,
+                        Id = "12",
+                        QuestionId = "3",
                         AnswerText = "derde foutieve antwoord op derde vraag",
                         IsCorrectAnswer = false
                     });
@@ -126,22 +124,22 @@ namespace B03.EE.BlanckeK.Api
                 .HasData(
                     new Question
                     {
-                        QuestionId = 1,
+                        Id = "1",
                         QuestionText = "Eerste vraag?",
-                        QuizId = 1
+                        QuizId = "1"
                     },
                     new Question
                     {
-                        QuestionId = 2,
+                        Id = "2",
                         QuestionText = "Tweede vraag?",
-                        QuizId = 1
+                        QuizId = "1"
 
                     },
                     new Question
                     {
-                        QuestionId = 3,
+                        Id = "3",
                         QuestionText = "Derde vraag?",
-                        QuizId = 1
+                        QuizId = "1"
                     });
 
         }

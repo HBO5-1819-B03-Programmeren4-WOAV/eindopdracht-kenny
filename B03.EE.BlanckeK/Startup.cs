@@ -1,4 +1,5 @@
 ﻿using B03.EE.BlanckeK.Api.Repositories;
+using B03.EE.BlanckeK.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,13 @@ namespace B03.EE.BlanckeK.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var config = new AutoMapper.MapperConfiguration(configuration =>
+            {
+                configuration.AddProfile(new AutoMapperConfiguration());
+            });
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<QuizContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("QuizService")));

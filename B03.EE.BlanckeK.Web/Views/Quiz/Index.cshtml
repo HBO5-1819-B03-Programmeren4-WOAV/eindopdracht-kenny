@@ -1,0 +1,32 @@
+﻿@using B03.EE.BlanckeK.Lib.DTO
+@using B03.EE.BlanckeK.Lib.Models
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+
+
+    @model List<QuizBasic>
+
+    <h1 class="text-center">Quizzes</h1>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="card-columns list-group">
+                    @foreach (QuizBasic quizBasic in Model)
+                    {
+                        <li class="list-group-item">
+                            <span><a class="btn btn-success" asp-controller="Quiz" asp-action="PlayQuiz" asp-route-id="@quizBasic.Id">Play</a> </span>
+                            <a asp-controller="Quiz" asp-action="PlayQuiz" asp-route-id="@quizBasic.Id">@quizBasic.QuizName</a>
+                            @{
+                                if (ViewBag.UserId == quizBasic.ApplicationUserId)
+                                {
+                                    <button name="btnDelete" class="float-right btn btn-danger">Delete</button>
+                                    <button name="btnDelete" class="float-right btn btn-info">Edit</button>
+                                }
+                            }
+
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
