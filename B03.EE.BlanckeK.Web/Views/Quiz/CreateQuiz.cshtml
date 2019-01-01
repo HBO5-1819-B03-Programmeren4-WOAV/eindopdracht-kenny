@@ -1,0 +1,30 @@
+﻿@model object
+
+@{
+    ViewBag.Title = "lets create your own quiz";
+}
+
+<div class="card">
+    <div class="card-header text-center">@ViewBag.Title</div>
+    <br />
+
+
+
+</div>
+
+@section scripts{ 
+    <script src="~/lib/vuejs/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data:{
+                message: 'Loading books...',
+                quiz: null
+                 }
+        });
+
+
+
+
+    </script>
+}

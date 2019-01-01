@@ -1,32 +1,29 @@
 ﻿@using B03.EE.BlanckeK.Lib.DTO
-@using B03.EE.BlanckeK.Lib.Models
-@using Microsoft.AspNetCore.Http
-@using Microsoft.AspNetCore.Identity
+
+@model List<QuizBasic>
 
 
-    @model List<QuizBasic>
+<h1 class="text-center">Quizzes</h1>
+<div class="col-md-12">
 
-    <h1 class="text-center">Quizzes</h1>
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="card-columns list-group">
-                    @foreach (QuizBasic quizBasic in Model)
-                    {
-                        <li class="list-group-item">
-                            <span><a class="btn btn-success" asp-controller="Quiz" asp-action="PlayQuiz" asp-route-id="@quizBasic.Id">Play</a> </span>
-                            <a asp-controller="Quiz" asp-action="PlayQuiz" asp-route-id="@quizBasic.Id">@quizBasic.QuizName</a>
-                            @{
-                                if (ViewBag.UserId == quizBasic.ApplicationUserId)
-                                {
-                                    <button name="btnDelete" class="float-right btn btn-danger">Delete</button>
-                                    <button name="btnDelete" class="float-right btn btn-info">Edit</button>
-                                }
-                            }
+    <ul class="card-columns list-group">
+        <li class="btn-success text-right list-unstyled">
+            <a asp-controller="Quiz" asp-action="CreateQuiz" class="col-md-12 float-right btn btn-success" style="color: white">Create New Quiz</a>
+        </li>
+        @foreach (QuizBasic quizBasic in Model)
+        {
+        <li class="list-group-item">
+            <span><a class="btn btn-success" asp-controller="Quiz" asp-action="PlayQuiz" asp-route-id="@quizBasic.Id">Play</a> </span>
+            <span>@quizBasic.QuizName</span>
+            @{
+                if (ViewBag.UserId == quizBasic.ApplicationUserId)
+                {
+                    <a asp-controller="Quiz" asp-action="DeleteQuiz" asp-route-id="@quizBasic.Id" name="btnDelete" class="float-right btn btn-danger">Delete</a> 
+                    <a asp-controller="Quiz" asp-action="EditQuiz" asp-route-id="@quizBasic.Id" name="btnEdit" class="float-right btn btn-info">Edit</a>
+                }
+            }
 
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
+        </li>
+        }
+    </ul>
+</div>

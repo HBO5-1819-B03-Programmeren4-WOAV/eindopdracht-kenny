@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using B03.EE.BlanckeK.Api.Repositories;
 using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace B03.EE.BlanckeK.Api.Controllers
 {
@@ -46,6 +43,13 @@ namespace B03.EE.BlanckeK.Api.Controllers
         public async Task<IActionResult> GetQuizzesForUser(string userId)
         {
             return Ok(await Repository.ListFiltered(user => user.Id == userId));
+        }
+
+        [HttpPost]
+        public override async Task<IActionResult> Post([FromBody] Quiz quiz)
+        {
+            quiz.Questions = null;
+            return await base.Post(quiz);
         }
     }
 }
