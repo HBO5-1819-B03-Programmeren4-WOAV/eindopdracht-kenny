@@ -30,7 +30,7 @@ namespace B03.EE.BlanckeK.Api.Controllers
 
         // PUT: api/T/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] string id, [FromBody] T entity)
+        public virtual async Task<IActionResult> Put([FromRoute] string id, [FromBody] T entity)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             if (id != entity.Id) return BadRequest("Het opgegeven ID bestaat niet");

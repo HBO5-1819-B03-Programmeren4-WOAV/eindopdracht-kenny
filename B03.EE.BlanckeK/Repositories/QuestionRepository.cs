@@ -16,11 +16,19 @@ namespace B03.EE.BlanckeK.Api.Repositories
         {
         }
 
-        // returns a list of all the quizzes
+        // returns a list of all the questions
         public async Task<List<Question>> GetAllInclusive()
         {
             return await GetAll()
                 .Include(q => q.AnswerList)
+                .ToListAsync();
+        }
+
+        // returns a list of all the questions for a given quiz
+        public async Task<List<Question>> GetAllQuestionsForQuiz(string id)
+        {
+            return await GetAll()
+                .Where(a => a.QuizId == id)
                 .ToListAsync();
         }
 

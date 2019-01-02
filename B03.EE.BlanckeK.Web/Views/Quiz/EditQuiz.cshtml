@@ -14,14 +14,21 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2">Questions</label>
-            <div class="col-sm-12" v-for="question in currentQuiz.questions" :key="question.questionText">
-                <input type="text" class="form-control" v-model="question.questionText">
+            <span >
+                <label class="col-sm-2">Questions</label>
+                <a v-on:click="AddQuestion" class="badge btn btn-success float-left">+</a>
+            </span>
+           
+            <div class="col-sm-12" v-for="question in currentQuiz.questions" :key="question.id">
+                <span style="display: flex;">
+                    <a v-on:click="DeleteQuestion" style="color: white" class="badge btn btn-danger float-left">remove</a>
+                    <input name="question" type="text" class="form-control" id="question" v-model="question.questionText">
+
+                </span>
                 <label class="col-sm-2">Answers</label>
                 <div class="col-sm-12" v-for="answer in question.answerList" :key="answer.answerText">
                     <input type="text" class="form-control" v-model="answer.answerText">
                 </div>
-
             </div>
         </div>
     </div>
@@ -39,49 +46,101 @@
 
     var getDetailApiUrl = "https://localhost:44342/api/Quiz/@Model.Id";
     var app = new Vue({
-
-            el: '#app',
-            data: {
-                message: 'Editing Quiz ... ',
-                quizzes: null,
-                currentQuiz: [],
-                isReadOnly: true,
-                isEdit: true
+        el: '#app',
+        data: {
+            message: 'Editing Quiz ... ',
+            questionList: [],
+            question: null,
+            currentQuiz: [],
+            isReadOnly: true,
+            isEdit: true
             },
             created: function() {
                 var self = this;
                 self.fetchQuizDetails();
-                
-                //todo go back to overview or somthing
             },
-            methods: {
-                save: function ()
-                {
-                    var self = this;
-                    var ApiUrl = "https://localhost:44342/api/";
+        methods:
+        {
+            save: function ()
+            {
+                // here we save the quiz
+                var self = this;
+                var apiUrl = "https://localhost:44342/api/";
 
-                    // opslaan - ajax configuratie
-                    var ajaxHeaders = new Headers();
-                    ajaxHeaders.append("Content-Type", "application/json");
-                    var ajaxConfig = {
-                        method: 'PUT',
-                        body: JSON.stringify(self.currentQuiz),
-                        headers: ajaxHeaders
-                    };
-                    let myRequest = new Request(`${ApiUrl}Quiz/${self.currentQuiz.id}`, ajaxConfig);
-                    fetch(myRequest)
-                        .then(res => res.json())
-                        .catch(err => console.error('Fout: fetch(myrequest) ' + err));
-                },
-                fetchQuizDetails: function () {
-                    var self = this;
-                    if (!self.isReadOnly) return;
-                    fetch(getDetailApiUrl)
-                        .then(res => res.json())
-                        .then(function (res) {
-                            self.currentQuiz = res;
-                        })
-                        .catch(err => console.error('Fout: FecthQuizDetails ' + err));
+                var ajaxHeaders = new Headers();
+                ajaxHeaders.append("Content-Type", "application/json");
+
+                var ajaxConfig =
+                {
+                    method: 'PUT',
+                    body: JSON.stringify(self.currentQuiz),
+                    headers: ajaxHeaders
+                };
+                let myRequest = new Request(`${apiUrl}Quiz/${self.currentQuiz.id}`, ajaxConfig);
+                fetch(myRequest)
+                    .then(res => res.json())
+                    .catch(err => console.error('Fout: fetch(myrequest) ' + err))
+                    // after we updated the quiz its time to update the questions from the quiz
+                    .then(function ()
+                    {
+                        self.saveQuestions(self.currentQuiz.id);
+                    });
+            },
+            DeleteQuestion: function () { },
+            AddQuestion: function () {},
+            saveQuestions: function (quizId)
+            {
+                // first delete the old questions
+                var apiDeleteQuestionsUrl = "https://localhost:44342/api/questions/quiz/" + quizId;
+
+                var ajaxHeaders = new Headers();
+                var ajaxConfig =
+                {
+                    method: 'DELETE',
+                    headers: ajaxHeaders
+                };
+                let myRequest = new Request(apiDeleteQuestionsUrl, ajaxConfig);
+                fetch(myRequest);
+
+                // here we add the questions that are now on the screen
+                var questionList = [];
+                $("input[id=question]").each(function ()
+                {
+                    var answerlist = [];
+                    var questionText = $(this).val();
+
+                    this.question = {};
+                    this.question["answerList"] = answerlist;
+                    this.question["questionText"] = questionText;
+                    this.question["quizId"] = quizId;
+
+                    questionList.push(this.question);
+                });
+
+                ajaxHeaders = new Headers();
+                ajaxHeaders.append("Content-Type", "application/json");
+                ajaxConfig =
+                {
+                    method: 'PUT',
+                    body: JSON.stringify(questionList),
+                    headers: ajaxHeaders
+                };
+                myRequest = new Request("https://localhost:44342/api/questions/quiz/" + quizId, ajaxConfig);
+                fetch(myRequest);
+            },
+            // here we get the current quiz details
+           
+            fetchQuizDetails: function ()
+            {
+                var self = this;
+                if (!self.isReadOnly) return;
+                fetch(getDetailApiUrl)
+                    .then(res => res.json())
+                    .then(function (res)
+                    {
+                        self.currentQuiz = res;
+                    })
+                    .catch(err => console.error('Fout: FecthQuizDetails ' + err));
                 } 
             }
         }

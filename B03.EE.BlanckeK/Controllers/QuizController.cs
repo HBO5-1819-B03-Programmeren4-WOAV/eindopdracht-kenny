@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using B03.EE.BlanckeK.Api.Repositories;
 using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.AspNetCore.Mvc;

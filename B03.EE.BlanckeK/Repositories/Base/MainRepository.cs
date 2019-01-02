@@ -50,8 +50,9 @@ namespace B03.EE.BlanckeK.Api.Repositories.Base
             {
                 await Db.SaveChangesAsync();
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return null;
             }
             return entity;
