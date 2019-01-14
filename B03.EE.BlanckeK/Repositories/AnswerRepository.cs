@@ -17,7 +17,7 @@ namespace B03.EE.BlanckeK.Api.Repositories
         }
 
        // returns a list of all answers but without all the details of it
-        public async Task<List<AnswerBasic>> AnswerBasic()
+        public async Task<ICollection<AnswerBasic>> AnswerBasic()
         { 
             return await Db.Answers.ProjectTo<AnswerBasic>(Mapper.ConfigurationProvider).ToListAsync();
         }

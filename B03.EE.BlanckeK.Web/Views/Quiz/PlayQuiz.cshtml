@@ -6,8 +6,8 @@
 
 @model Quiz
 
-<div class="card">
-    <div class="card-header text-center">@Model.QuizName</div>
+<article class="card">
+    <div class="card-header text-center">You are playing '@Model.QuizName'</div>
     <br/>
     <div class="card-body" style="margin-bottom: 0%">
         <div class="card">
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="card-footer"><a asp-controller="Quiz" asp-action="Index" class="btn btn-primary">Back to list</a></div>
-</div>
+</article>
 
 <div id="myModal" class="modal">
     <!-- Modal content -->

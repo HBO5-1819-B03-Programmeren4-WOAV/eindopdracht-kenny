@@ -22,16 +22,7 @@ namespace B03.EE.BlanckeK.Api.Controllers
             return Ok(await Repository.GetAllInclusive());
         }
 
-
-        // GET api/questions/basic
-        [HttpGet]
-        [Route("Basic")]
-        public async Task<IActionResult> GetQuestionBasic()
-        {
-            return Ok(await Repository.QuestionBasic());
-        }
-
-        // Get api/questions/quiz/1
+        // Delete api/questions/quiz/1
         [HttpDelete("quiz/{quizId}")]
         public async Task<IActionResult> DeleteQuestionsForQuiz(string quizId)
         {
@@ -43,6 +34,15 @@ namespace B03.EE.BlanckeK.Api.Controllers
             return Ok();
         }
 
+        // post api/questions/add
+        [HttpPost("add")]
+        public override async Task<IActionResult> Post([FromBody] Question question)
+        {
+            return await base.Post(question);
+        }
+
+
+        // put api/questions/quiz
         [HttpPut("quiz/{quizId}")]
         public async Task<IActionResult> AddQuestionListForQuiz(List<Question> newQuestionList)
         {
@@ -52,6 +52,13 @@ namespace B03.EE.BlanckeK.Api.Controllers
                 await Repository.Add(question);
             }
             return Ok();
+        }
+
+        // get api/questions/quiz/1
+        [HttpGet("quiz/{quizId}")]
+        public async Task<IActionResult> GetQuestionListForQuiz(string quizId)
+        {
+            return Ok(await Repository.GetAllQuestionsForQuiz(quizId));
         }
     }
 }

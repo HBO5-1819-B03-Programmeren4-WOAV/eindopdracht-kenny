@@ -9,6 +9,8 @@ namespace B03.EE.BlanckeK.Lib.Models
 
         public string QuizId { get; set; }
 
+        public int SortId { get; set; }
+
         public ICollection<Answer> AnswerList { get; set; }
     }
 }

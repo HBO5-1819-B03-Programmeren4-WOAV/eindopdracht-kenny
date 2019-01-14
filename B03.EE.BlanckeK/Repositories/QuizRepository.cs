@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -23,6 +25,7 @@ namespace B03.EE.BlanckeK.Api.Repositories
                 .Include(q => q.Questions)
                 .ThenInclude(a => a.AnswerList)
                 .ToListAsync();
+
         }
 
         public async Task<Quiz> GetAllInclusiveById(string id)

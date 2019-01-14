@@ -126,20 +126,22 @@ namespace B03.EE.BlanckeK.Api
                     {
                         Id = "1",
                         QuestionText = "Eerste vraag?",
-                        QuizId = "1"
+                        QuizId = "1",
+                        SortId = 1
                     },
                     new Question
                     {
                         Id = "2",
                         QuestionText = "Tweede vraag?",
-                        QuizId = "1"
-
+                        QuizId = "1",
+                        SortId = 2
                     },
                     new Question
                     {
                         Id = "3",
                         QuestionText = "Derde vraag?",
-                        QuizId = "1"
+                        QuizId = "1", 
+                        SortId = 3
                     });
 
         }

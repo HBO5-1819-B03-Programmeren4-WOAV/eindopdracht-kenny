@@ -182,7 +182,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         {
                             Id = "KennyBlancke@icloud.com",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1a59811f-b50d-40cc-b9e3-6e4a816c171f",
+                            ConcurrencyStamp = "d63db1cc-2096-4d6e-889e-b0040a069f13",
                             EmailConfirmed = false,
                             FirstName = "Kenny",
                             LastName = "Blancke",
@@ -201,6 +201,8 @@ namespace B03.EE.BlanckeK.Api.Migrations
 
                     b.Property<string>("QuizId");
 
+                    b.Property<int>("SortId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("QuizId");
@@ -212,19 +214,22 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         {
                             Id = "1",
                             QuestionText = "Eerste vraag?",
-                            QuizId = "1"
+                            QuizId = "1",
+                            SortId = 1
                         },
                         new
                         {
                             Id = "2",
                             QuestionText = "Tweede vraag?",
-                            QuizId = "1"
+                            QuizId = "1",
+                            SortId = 2
                         },
                         new
                         {
                             Id = "3",
                             QuestionText = "Derde vraag?",
-                            QuizId = "1"
+                            QuizId = "1",
+                            SortId = 3
                         });
                 });
 

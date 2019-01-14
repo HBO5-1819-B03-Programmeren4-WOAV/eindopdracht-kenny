@@ -2,36 +2,62 @@
 @model Quiz
 
 <script src="~/lib/vuejs/vue.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 
 <article id="app" class="card">
-    <div class="card-header text-center">you are editing '@Model.QuizName'</div>
-    <br />
-    <div class="card-body" style="margin-bottom: 0%">
-        <div class="form-group">
-            <label class="col-sm-2">QuizName</label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control" v-model="currentQuiz.quizName">
+    <blockquote class="card-header text-center">you are editing '{{ currentQuiz.quizName }}'</blockquote>
+
+    <!-- QuizName-->
+    <div class="card">
+        <div class="card-title" style="margin-bottom: 0">
+            <div class="form-group card-header" style="background-color: aliceblue">
+                <label class="col-md-12 text-center">QuizName</label>
+                <input type="text" class="form-control col-md-12" v-model="currentQuiz.quizName">
             </div>
         </div>
-        <div class="form-group">
-            <span >
-                <label class="col-sm-2">Questions</label>
-                <a v-on:click="AddQuestion" class="badge btn btn-success float-left">+</a>
-            </span>
-           
-            <div class="col-sm-12" v-for="question in currentQuiz.questions" :key="question.id">
-                <span style="display: flex;">
-                    <a v-on:click="DeleteQuestion" style="color: white" class="badge btn btn-danger float-left">remove</a>
-                    <input name="question" type="text" class="form-control" id="question" v-model="question.questionText">
 
-                </span>
-                <label class="col-sm-2">Answers</label>
-                <div class="col-sm-12" v-for="answer in question.answerList" :key="answer.answerText">
-                    <input type="text" class="form-control" v-model="answer.answerText">
+
+        <div class="card-title" style="background-color: aliceblue; padding-top: 2%">
+            <div class="text-center col-md-12">
+
+                <p class="text-center col-md-12" style="color: chocolate; font-weight: bold; font-size: large">Questions</p>
+
+                <div class="col-md-12 card-title text-center" v-for="question in currentQuiz.questions" :key="question.id">
+                    
+                    <!-- Question + answer div -->
+                    <div v-bind:id="'questiondiv' + question.id">
+
+                        <!-- Question div -->
+                        <div style="background-color: aliceblue">
+                            <span class="questionSpan">
+                                <a v-on:click="DeleteQuestion(question.id)" style="color: white;" class="badge btn btn-danger float-right">remove question</a>
+                                <input type="text" class="form-control" id="question" v-model="question.questionText"/>
+                                <input name="questionId" type="hidden" class="form-control" id="questionId" v-model="question.id"/>
+                                <input name="sortIdLabel" type="hidden" class="form-control" id="sortIdLabel" v-model="question.sortId"/>
+                            </span>
+                        </div>
+
+                        <!-- Answer div -->
+                        <div style="background-color: lightblue">
+                            <label class="col-md-12">Answers for question with id: {{ question.id }} : </label>
+                            <div class="col-md-12" v-for="answer in question.answerList" :key="answer.id">
+                                <input type="text" class="form-control" v-model="answer.answerText">
+                                <label>
+                                    <input type="checkbox" v-model="answer.isCorrectAnswer"/>
+                                    This answer is correct
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <a v-on:click="AddAnswer(question.id, question.answerList)" style="color: white" class="badge btn btn-secondary col-md-12">Add answer</a>
+                    </div>
                 </div>
+                <a v-on:click="AddQuestion(currentQuiz.id, currentQuiz.questions)" style="color: white" class="badge btn btn-primary col-md-12">Add question</a>
             </div>
+           
         </div>
     </div>
+
     <div class="card-footer">
         <button v-on:click="save" class="btn btn-success">Save</button>
         <a asp-controller="Quiz" asp-action="Index" class="btn btn-primary">Back to list</a>
@@ -51,9 +77,12 @@
             message: 'Editing Quiz ... ',
             questionList: [],
             question: null,
+            answer: null,
+            answerListForQuestion: [],
             currentQuiz: [],
             isReadOnly: true,
-            isEdit: true
+            isEdit: true,
+            apiUrl: "https://localhost:44342/api"
             },
             created: function() {
                 var self = this;
@@ -65,7 +94,6 @@
             {
                 // here we save the quiz
                 var self = this;
-                var apiUrl = "https://localhost:44342/api/";
 
                 var ajaxHeaders = new Headers();
                 ajaxHeaders.append("Content-Type", "application/json");
@@ -76,18 +104,62 @@
                     body: JSON.stringify(self.currentQuiz),
                     headers: ajaxHeaders
                 };
-                let myRequest = new Request(`${apiUrl}Quiz/${self.currentQuiz.id}`, ajaxConfig);
+                var myRequest = new Request(`${self.apiUrl}/Quiz/${self.currentQuiz.id}`, ajaxConfig);
                 fetch(myRequest)
                     .then(res => res.json())
                     .catch(err => console.error('Fout: fetch(myrequest) ' + err))
                     // after we updated the quiz its time to update the questions from the quiz
-                    .then(function ()
-                    {
+                    .then(function() {
                         self.saveQuestions(self.currentQuiz.id);
                     });
             },
-            DeleteQuestion: function () { },
-            AddQuestion: function () {},
+            DeleteQuestion: function (questionId)
+            {
+                var self = this;
+                // todo First delete the answers for the current question
+                console.log("DeleteQuestion is running");
+                $('#questiondiv'+ questionId).remove();
+            },
+            AddQuestion: function (quizId, questionCollection)
+            {
+                var self = this;
+                var tempQuestion = {};
+                tempQuestion["answerList"] = [];
+                tempQuestion["questionText"] = "";
+                tempQuestion["quizId"] = quizId;
+                tempQuestion["sortId"] = $('span.questionSpan').length + 1;
+
+                var ajaxHeaders = new Headers();
+                ajaxHeaders.append("Content-Type", "application/json");
+                var ajaxConfig =
+                    {
+                        method: 'POST',
+                        body: JSON.stringify(tempQuestion),
+                        headers: ajaxHeaders
+                    };
+                let myRequest = new Request("https://localhost:44342/api/questions/add", ajaxConfig);
+                fetch(myRequest)
+                    .then(res => res.json())
+                    .then(function (res)
+                    {
+                        self.question = res;
+                    }).then(function() {
+                        questionCollection.push(self.question);
+                    });;
+            },
+            AddAnswer: function (questionId, answerList)
+            {
+                var self = this;
+                alert(questionId);
+
+                this.answer = {};
+                this.answer["questionId"] = questionId;
+                this.answer["answerText"] = "";
+                this.answer["IsCorrectAnswer"] = false;
+                /* this.question["sortId"] = $('span.questionSpan').length + 1;*/
+                answerList.push(this.answer);
+
+            },
             saveQuestions: function (quizId)
             {
                 // first delete the old questions
@@ -99,20 +171,21 @@
                     method: 'DELETE',
                     headers: ajaxHeaders
                 };
-                let myRequest = new Request(apiDeleteQuestionsUrl, ajaxConfig);
+                var myRequest = new Request(apiDeleteQuestionsUrl, ajaxConfig);
                 fetch(myRequest);
 
                 // here we add the questions that are now on the screen
                 var questionList = [];
-                $("input[id=question]").each(function ()
-                {
-                    var answerlist = [];
+                var counter = 0;
+                $("input[id=question]").each(function () {
+                    counter ++;
                     var questionText = $(this).val();
 
                     this.question = {};
-                    this.question["answerList"] = answerlist;
+                    this.question["answerList"] = [];
                     this.question["questionText"] = questionText;
                     this.question["quizId"] = quizId;
+                    this.question["sortId"] = counter;
 
                     questionList.push(this.question);
                 });
@@ -128,22 +201,56 @@
                 myRequest = new Request("https://localhost:44342/api/questions/quiz/" + quizId, ajaxConfig);
                 fetch(myRequest);
             },
+
             // here we get the current quiz details
-           
             fetchQuizDetails: function ()
             {
                 var self = this;
-                if (!self.isReadOnly) return;
                 fetch(getDetailApiUrl)
                     .then(res => res.json())
                     .then(function (res)
                     {
                         self.currentQuiz = res;
+                        self.currentQuiz.questions = [];
                     })
-                    .catch(err => console.error('Fout: FecthQuizDetails ' + err));
-                } 
+                    .catch(err => console.error('Fout: FecthQuizDetails ' + err))
+                    .then(function ()
+                    {
+                        self.fetchQuestionsForQuiz(self.currentQuiz);
+                    });
+            },
+            fetchQuestionsForQuiz: function (currentQuiz)
+            {
+                // because i cant sort the questions in the quiz object i manualy fetch the questions
+                // and then insert them into the quiz object (cant find another solution)
+                var self = this;
+                var getQuestionsForQuizApiUrl = "https://localhost:44342/api/questions/quiz/" + currentQuiz.id;
+                fetch(getQuestionsForQuizApiUrl)
+                    .then(res => res.json())
+                    .then(function(res) {
+                        self.currentQuiz.questions = res;
+                        $.each(res,
+                            function (i, currentQuestion)
+                            {
+                                self.fetchAnswersForQuestion(currentQuestion.id, currentQuestion);
+                              /*  currentQuestion.answerList = self.answerListForQuestion;*/
+                            }
+                        );
+                    });
+
+            },
+            fetchAnswersForQuestion: function (questionId, currentQuestion) {
+                this.answerListForQuestion = [];
+                var self = this;
+                var getQuestionsForQuizApiUrl = "https://localhost:44342/api/answers/question/" + questionId;
+                fetch("https://localhost:44342/api/answers/question/" + questionId)
+                    .then(res => res.json())
+                    .then(function (res) {
+                        currentQuestion.answerList = res;
+                    });
+
             }
         }
+        }
     );
-    Vue.config.devtools = true;
 </script>

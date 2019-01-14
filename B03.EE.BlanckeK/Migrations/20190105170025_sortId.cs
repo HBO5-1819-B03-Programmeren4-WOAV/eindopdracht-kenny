@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace B03.EE.BlanckeK.Api.Migrations
 {
-    public partial class idstring : Migration
+    public partial class sortId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -180,7 +180,8 @@ namespace B03.EE.BlanckeK.Api.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     QuestionText = table.Column<string>(nullable: true),
-                    QuizId = table.Column<string>(nullable: true)
+                    QuizId = table.Column<string>(nullable: true),
+                    SortId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,7 +217,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "KennyBlancke@icloud.com", 0, "1a59811f-b50d-40cc-b9e3-6e4a816c171f", null, false, "Kenny", "Blancke", false, null, null, null, null, null, false, null, false, null });
+                values: new object[] { "KennyBlancke@icloud.com", 0, "d63db1cc-2096-4d6e-889e-b0040a069f13", null, false, "Kenny", "Blancke", false, null, null, null, null, null, false, null, false, null });
 
             migrationBuilder.InsertData(
                 table: "Quiz",
@@ -225,18 +226,18 @@ namespace B03.EE.BlanckeK.Api.Migrations
 
             migrationBuilder.InsertData(
                 table: "Questions",
-                columns: new[] { "Id", "QuestionText", "QuizId" },
-                values: new object[] { "1", "Eerste vraag?", "1" });
+                columns: new[] { "Id", "QuestionText", "QuizId", "SortId" },
+                values: new object[] { "1", "Eerste vraag?", "1", 1 });
 
             migrationBuilder.InsertData(
                 table: "Questions",
-                columns: new[] { "Id", "QuestionText", "QuizId" },
-                values: new object[] { "2", "Tweede vraag?", "1" });
+                columns: new[] { "Id", "QuestionText", "QuizId", "SortId" },
+                values: new object[] { "2", "Tweede vraag?", "1", 2 });
 
             migrationBuilder.InsertData(
                 table: "Questions",
-                columns: new[] { "Id", "QuestionText", "QuizId" },
-                values: new object[] { "3", "Derde vraag?", "1" });
+                columns: new[] { "Id", "QuestionText", "QuizId", "SortId" },
+                values: new object[] { "3", "Derde vraag?", "1", 3 });
 
             migrationBuilder.InsertData(
                 table: "Answer",

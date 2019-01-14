@@ -20,5 +20,13 @@ namespace B03.EE.BlanckeK.Api.Controllers
         {
             return Ok(await Repository.AnswerBasic());
         }
+
+        // Get api/answers/question/ddb84a1c-1349-46e8-a19b-bd854490474a
+        [HttpGet]
+        [Route("question/{questionId}")]
+        public async Task<IActionResult> GetAnswersForQuestion(string questionId)
+        {
+            return Ok(await Repository.ListFiltered(a => a.QuestionId == questionId));
+        }
     }
 }
