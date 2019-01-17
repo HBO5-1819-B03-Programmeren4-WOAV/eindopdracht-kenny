@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B03.EE.BlanckeK.Api.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20190105170025_sortId")]
-    partial class sortId
+    [Migration("20190116174707_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,92 +37,6 @@ namespace B03.EE.BlanckeK.Api.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("Answer");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            AnswerText = "Correct antwoord op eerste vraag",
-                            IsCorrectAnswer = true,
-                            QuestionId = "1"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            AnswerText = "Eerste foutieve antwoord op eerste vraag",
-                            IsCorrectAnswer = false,
-                            QuestionId = "1"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            AnswerText = "tweede foutieve antwoord op eerste vraag",
-                            IsCorrectAnswer = false,
-                            QuestionId = "1"
-                        },
-                        new
-                        {
-                            Id = "4",
-                            AnswerText = "derde foutieve antwoord op eerste vraag",
-                            IsCorrectAnswer = false,
-                            QuestionId = "1"
-                        },
-                        new
-                        {
-                            Id = "5",
-                            AnswerText = "Eerste foutieve antwoord op tweede vraag",
-                            IsCorrectAnswer = false,
-                            QuestionId = "2"
-                        },
-                        new
-                        {
-                            Id = "6",
-                            AnswerText = "Tweede foutieve antwoord op tweede vraag",
-                            IsCorrectAnswer = false,
-                            QuestionId = "2"
-                        },
-                        new
-                        {
-                            Id = "7",
-                            AnswerText = "Juiste antwoord op tweede vraag",
-                            IsCorrectAnswer = true,
-                            QuestionId = "2"
-                        },
-                        new
-                        {
-                            Id = "8",
-                            AnswerText = "derde foutieve antwoord op tweede vraag",
-                            IsCorrectAnswer = false,
-                            QuestionId = "2"
-                        },
-                        new
-                        {
-                            Id = "9",
-                            AnswerText = "Correct antwoord op derde vraag",
-                            IsCorrectAnswer = true,
-                            QuestionId = "3"
-                        },
-                        new
-                        {
-                            Id = "10",
-                            AnswerText = "Eerste foutieve antwoord op derde vraag",
-                            IsCorrectAnswer = false,
-                            QuestionId = "3"
-                        },
-                        new
-                        {
-                            Id = "11",
-                            AnswerText = "tweede foutieve antwoord op derde vraag",
-                            IsCorrectAnswer = false,
-                            QuestionId = "3"
-                        },
-                        new
-                        {
-                            Id = "12",
-                            AnswerText = "derde foutieve antwoord op derde vraag",
-                            IsCorrectAnswer = false,
-                            QuestionId = "3"
-                        });
                 });
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.ApplicationUser", b =>
@@ -178,20 +92,6 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "KennyBlancke@icloud.com",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "d63db1cc-2096-4d6e-889e-b0040a069f13",
-                            EmailConfirmed = false,
-                            FirstName = "Kenny",
-                            LastName = "Blancke",
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false
-                        });
                 });
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Question", b =>
@@ -210,29 +110,6 @@ namespace B03.EE.BlanckeK.Api.Migrations
                     b.HasIndex("QuizId");
 
                     b.ToTable("Questions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            QuestionText = "Eerste vraag?",
-                            QuizId = "1",
-                            SortId = 1
-                        },
-                        new
-                        {
-                            Id = "2",
-                            QuestionText = "Tweede vraag?",
-                            QuizId = "1",
-                            SortId = 2
-                        },
-                        new
-                        {
-                            Id = "3",
-                            QuestionText = "Derde vraag?",
-                            QuizId = "1",
-                            SortId = 3
-                        });
                 });
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Quiz", b =>
@@ -249,14 +126,6 @@ namespace B03.EE.BlanckeK.Api.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Quiz");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            ApplicationUserId = "KennyBlancke@icloud.com",
-                            QuizName = "Eerste quiz"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -373,21 +242,24 @@ namespace B03.EE.BlanckeK.Api.Migrations
                 {
                     b.HasOne("B03.EE.BlanckeK.Lib.Models.Question")
                         .WithMany("AnswerList")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Question", b =>
                 {
                     b.HasOne("B03.EE.BlanckeK.Lib.Models.Quiz")
                         .WithMany("Questions")
-                        .HasForeignKey("QuizId");
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("B03.EE.BlanckeK.Lib.Models.Quiz", b =>
                 {
                     b.HasOne("B03.EE.BlanckeK.Lib.Models.ApplicationUser")
                         .WithMany("Quizzes")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

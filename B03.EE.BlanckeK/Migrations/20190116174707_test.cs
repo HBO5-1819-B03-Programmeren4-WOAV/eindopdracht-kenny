@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace B03.EE.BlanckeK.Api.Migrations
 {
-    public partial class sortId : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -171,7 +171,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,7 +191,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         column: x => x.QuizId,
                         principalTable: "Quiz",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,51 +211,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "KennyBlancke@icloud.com", 0, "d63db1cc-2096-4d6e-889e-b0040a069f13", null, false, "Kenny", "Blancke", false, null, null, null, null, null, false, null, false, null });
-
-            migrationBuilder.InsertData(
-                table: "Quiz",
-                columns: new[] { "Id", "ApplicationUserId", "QuizName" },
-                values: new object[] { "1", "KennyBlancke@icloud.com", "Eerste quiz" });
-
-            migrationBuilder.InsertData(
-                table: "Questions",
-                columns: new[] { "Id", "QuestionText", "QuizId", "SortId" },
-                values: new object[] { "1", "Eerste vraag?", "1", 1 });
-
-            migrationBuilder.InsertData(
-                table: "Questions",
-                columns: new[] { "Id", "QuestionText", "QuizId", "SortId" },
-                values: new object[] { "2", "Tweede vraag?", "1", 2 });
-
-            migrationBuilder.InsertData(
-                table: "Questions",
-                columns: new[] { "Id", "QuestionText", "QuizId", "SortId" },
-                values: new object[] { "3", "Derde vraag?", "1", 3 });
-
-            migrationBuilder.InsertData(
-                table: "Answer",
-                columns: new[] { "Id", "AnswerText", "IsCorrectAnswer", "QuestionId" },
-                values: new object[,]
-                {
-                    { "1", "Correct antwoord op eerste vraag", true, "1" },
-                    { "2", "Eerste foutieve antwoord op eerste vraag", false, "1" },
-                    { "3", "tweede foutieve antwoord op eerste vraag", false, "1" },
-                    { "4", "derde foutieve antwoord op eerste vraag", false, "1" },
-                    { "5", "Eerste foutieve antwoord op tweede vraag", false, "2" },
-                    { "6", "Tweede foutieve antwoord op tweede vraag", false, "2" },
-                    { "7", "Juiste antwoord op tweede vraag", true, "2" },
-                    { "8", "derde foutieve antwoord op tweede vraag", false, "2" },
-                    { "9", "Correct antwoord op derde vraag", true, "3" },
-                    { "10", "Eerste foutieve antwoord op derde vraag", false, "3" },
-                    { "11", "tweede foutieve antwoord op derde vraag", false, "3" },
-                    { "12", "derde foutieve antwoord op derde vraag", false, "3" }
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

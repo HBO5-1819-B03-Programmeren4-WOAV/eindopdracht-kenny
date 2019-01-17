@@ -8,22 +8,33 @@
 
     <ul class="card-columns list-group">
         <li class="btn-success text-right list-unstyled">
-            <a asp-controller="Quiz" asp-action="CreateQuiz" class="col-md-12 float-right btn btn-success" style="color: white">Create New Quiz</a>
-        </li>
-        @foreach (QuizBasic quizBasic in Model)
-        {
-        <li class="list-group-item">
-            <span><a class="btn btn-success" asp-controller="Quiz" asp-action="PlayQuiz" asp-route-id="@quizBasic.Id">Play</a> </span>
-            <span>@quizBasic.QuizName</span>
             @{
-                if (ViewBag.UserId == quizBasic.ApplicationUserId)
+                if (ViewBag.Userid != null)
                 {
-                    <a asp-controller="Quiz" asp-action="DeleteQuiz" asp-route-id="@quizBasic.Id" name="btnDelete" class="float-right btn btn-danger">Delete</a> 
-                    <a asp-controller="Quiz" asp-action="EditQuiz" asp-route-id="@quizBasic.Id" name="btnEdit" class="float-right btn btn-info">Edit</a>
+                    <a asp-controller="Quiz" asp-action="CreateQuiz" class="col-md-12 float-right btn btn-success" style="color: white">Create New Quiz</a>
+                }
+                else
+                {
+                    <a asp-area="Identity"asp-page="/Account/Login" class="col-md-12 float-right btn btn-success" style="color: white">Login or Register to create you own quiz !!</a>
                 }
             }
 
+
         </li>
+        @foreach (QuizBasic quizBasic in Model)
+        {
+            <li class="list-group-item">
+                <span><a class="btn btn-success" asp-controller="Quiz" asp-action="PlayQuiz" asp-route-id="@quizBasic.Id">Play</a> </span>
+                <span>@quizBasic.QuizName</span>
+                @{
+                    if (ViewBag.UserId == quizBasic.ApplicationUserId)
+                    {
+                        <a asp-controller="Quiz" asp-action="DeleteQuiz" asp-route-id="@quizBasic.Id" name="btnDelete" class="float-right btn btn-danger">Delete</a>
+                        <a asp-controller="Quiz" asp-action="EditQuiz" asp-route-id="@quizBasic.Id" name="btnEdit" class="float-right btn btn-info">Edit</a>
+                    }
+                }
+
+            </li>
         }
     </ul>
 </div>

@@ -49,8 +49,14 @@ namespace B03.EE.BlanckeK.Api.Controllers
         [HttpPost]
         public override async Task<IActionResult> Post([FromBody] Quiz quiz)
         {
-            quiz.Questions = null;
             return await base.Post(quiz);
+        }
+
+        [HttpPut]
+        [Route("{quizId}")]
+        public override async Task<IActionResult> Put([FromRoute] string quizId, [FromBody] Quiz quiz)
+        {
+            return await base.Put(quizId, quiz);
         }
     }
 }

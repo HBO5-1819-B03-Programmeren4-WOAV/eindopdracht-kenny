@@ -1,30 +1,149 @@
-﻿@model object
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
-@{
-    ViewBag.Title = "lets create your own quiz";
-}
+<script src="~/lib/vuejs/vue.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 
-<div class="card">
-    <div class="card-header text-center">@ViewBag.Title</div>
+<article id="app" class="card">
+
+    <header class="card-header text-center">Creating quiz: {{ currentQuiz.quizName }} </header>
     <br />
+    <!-- QuizName-->
+    <div class="card-title" style="margin-bottom: 0">
+        <div class="form-group card-header" style="background-color: aliceblue">
+            <label class="col-md-12 text-center">QuizName</label>
+            <input type="text" class="form-control col-md-12" v-model="currentQuiz.quizName">
+        </div>
+    </div>
 
 
+    <div class="card-title" style="background-color: aliceblue; padding-top: 2%">
+        <div class="text-center col-md-12">
+            <p class="text-center col-md-12" style="color: chocolate; font-weight: bold; font-size: large">Questions</p>
 
-</div>
+            <div class="col-md-12 card-title text-center" v-for="question in currentQuiz.questions" :key="question.id">
+                <!-- Question + answer div -->
+                <div>
 
-@section scripts{ 
-    <script src="~/lib/vuejs/vue.js"></script>
-    <script>
-        var app = new Vue({
-            el: '#app',
-            data:{
-                message: 'Loading books...',
-                quiz: null
-                 }
-        });
+                    <!-- Question div -->
+                    <div style="background-color: aliceblue" class="questionDiv form-group">
+                        <a v-on:click="RemoveQuestion(question)" style="color: white;" class="badge btn btn-danger float-right">remove question</a>
+                        <input type="text" class="form-control" id="question" v-model="question.questionText" />
+                        <input name="questionId" type="hidden" class="form-control" id="questionId" />
+                        <input name="sortIdLabel" type="hidden" class="form-control" id="sortIdLabel" />
+                    </div>
+                    <!-- Answer div -->
+                    <div style="background-color: lightblue">
+                        <label class="col-md-12" style="color: chocolate; font-weight: bold; font-size: large">{{ question.questionText }} </label>
+                        <div class="col-md-12" v-for="answer in question.answerList" :key="answer.id">
+                            <a v-on:click="RemoveAnswer(question, answer)" style="color: white;" class="badge btn btn-dark float-right">remove answer</a>
+                            <input type="text" class="form-control" v-model="answer.answerText">
+                            <label>
+                                <input type="checkbox" v-model="answer.isCorrectAnswer" />
+                                This answer is correct
+                            </label>
+                        </div>
+                    </div>
+                    <a v-on:click="AddNewAnswer(question)" style="color: white" class="badge btn btn-secondary col-md-12">Add answer for question: {{ question.questionText }} </a>
+                </div>
+                <hr style="background-color: chocolate" />
+            </div>
 
+            <a v-on:click="AddNewQuestion" style="color: white" class="badge btn btn-primary col-md-12">Add question</a>
+        </div>
+    </div>
 
+    <div class="card-footer">
+        <button v-on:click="SaveCompleteQuiz" class="btn btn-success">Save</button>
+        <a asp-controller="Quiz" asp-action="Index" class="btn btn-primary">Back to list</a>
+    </div>
+</article>
 
+<script>
 
-    </script>
-}
+    var LoggedInUserid = "@SignInManager.UserManager.GetUserId(User)";
+    var BaseApiUrl = "https://localhost:44342/api/Quiz";
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Creating Quiz ... ',
+            answer: null,
+            answerListForQuestion: [],
+            currentQuiz: null,
+            isReadOnly: true,
+            userid: LoggedInUserid,
+            isEdit: true,
+            apiUrl: "https://localhost:44342/api"
+        },
+        created: function () {
+            var self = this;
+            self.currentQuiz = {
+                "quizName": "",
+                "applicationUserId": this.userid,
+                "questions": [
+                    {
+                        "questionText": "",
+                        "sortId": 1,
+                        "answerList": [
+                            {
+                                "answerText": "",
+                                "isCorrectAnswer": false
+                            }]
+                    }]
+            }
+            console.log(self.currentQuiz);
+            console.log(this.userid);
+
+        },
+        methods: {
+            AddNewQuestion: function () {
+                var self = this;
+                var newQuestion =
+                {
+                    "questionText": "",
+                    "sortId": $('div.questionDiv').length + 1,
+                    "answerList":
+                        [
+                            {
+                                "answerText": "",
+                                "isCorrectAnswer": false
+                            }
+                        ]
+                };
+                this.currentQuiz.questions.push(newQuestion);
+                console.log(self.currentQuiz);
+            },
+            AddNewAnswer: function (question) {
+                var self = this;
+                var newAnswer = {
+                    "answerText": "",
+                    "isCorrectAnswer": false
+                }
+                question.answerList.push(newAnswer);
+                console.log(self.currentQuiz);
+            },
+            RemoveQuestion: function (questionToRemove) {
+                this.currentQuiz.questions.splice($.inArray(questionToRemove, this.currentQuiz.questions), 1);
+            },
+            RemoveAnswer: function (selectedQuestion, answerToRemove) {
+                selectedQuestion.answerList.splice($.inArray(answerToRemove, selectedQuestion.answerList), 1);
+            },
+            SaveCompleteQuiz: function () {
+                var ajaxHeaders = new Headers();
+                ajaxHeaders.append("Content-Type", "application/json");
+                var ajaxConfig =
+                {
+                    method: 'POST',
+                    body: JSON.stringify(this.currentQuiz),
+                    headers: ajaxHeaders
+                };
+                let myRequest = new Request("https://localhost:44342/api/quiz", ajaxConfig);
+                fetch(myRequest)
+                    .then(res => res.json())
+                    .then(console.log("geslaagd"));
+            }
+        }
+    });
+</script>
