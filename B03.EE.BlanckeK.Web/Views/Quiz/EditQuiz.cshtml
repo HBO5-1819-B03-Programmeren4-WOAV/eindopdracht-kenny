@@ -6,7 +6,6 @@
 
 <article id="app" class="card">
     <blockquote class="card-header text-center">you are editing '{{ currentQuiz.quizName }}'</blockquote>
-
     <!-- QuizName-->
     <div class="card">
         <div class="card-title" style="margin-bottom: 0">
@@ -30,7 +29,7 @@
                         <!-- Question div -->
                         <div style="background-color: aliceblue">
                             <span class="questionSpan">
-                                <a v-on:click="DeleteQuestion(question.id)" style="color: white;" class="badge btn btn-danger float-right">remove question</a>
+                                <a v-on:click="DeleteQuestion(question)" style="color: white;" class="badge btn btn-danger float-right">remove question</a>
                                 <input type="text" class="form-control" id="question" v-model="question.questionText"/>
                                 <input name="questionId" type="hidden" class="form-control" id="questionId" v-model="question.id"/>
                                 <input name="sortIdLabel" type="hidden" class="form-control" id="sortIdLabel" v-model="question.sortId"/>
@@ -41,6 +40,7 @@
                         <div style="background-color: lightblue">
                             <label class="col-md-12">Answers for question with id: {{ question.id }} : </label>
                             <div class="col-md-12" v-for="answer in question.answerList" :key="answer.id">
+                                <a v-on:click="RemoveAnswer(question, answer)" style="color: white;" class="badge btn btn-dark float-right">remove answer</a>
                                 <input type="text" class="form-control" v-model="answer.answerText">
                                 <label>
                                     <input type="checkbox" v-model="answer.isCorrectAnswer"/>
@@ -69,7 +69,7 @@
 
 
 <script>
-    var BaseApiUrl = "https://localhost:44342/api/Quiz";
+
     var getDetailApiUrl = "https://localhost:44342/api/Quiz/@Model.Id";
     var app = new Vue({
         el: '#app',
@@ -93,46 +93,28 @@
             saveCompleteQuiz: function() {
                 var self = this;
 
-
-
-                console.log(self.currentQuiz.quizName);
-                console.log(self.currentQuiz.id);
-                console.log(self.currentQuiz.applicationUserId);
-                console.log(self.currentQuiz.questions);
-            },
-            createQuizObject: function() {
-                var self = this;
-
-            },
-            save: function ()
-            {
-                // here we save the quiz
-                var self = this;
-
                 var ajaxHeaders = new Headers();
                 ajaxHeaders.append("Content-Type", "application/json");
-
                 var ajaxConfig =
                 {
                     method: 'PUT',
-                    body: JSON.stringify(self.currentQuiz),
+                    body: JSON.stringify(this.currentQuiz),
                     headers: ajaxHeaders
                 };
-                var myRequest = new Request(`${self.apiUrl}/Quiz/${self.currentQuiz.id}`, ajaxConfig);
+                let myRequest = new Request(`${self.apiUrl}/Quiz/${self.currentQuiz.id}`, ajaxConfig);
                 fetch(myRequest)
                     .then(res => res.json())
-                    .catch(err => console.error('Fout: fetch(myrequest) ' + err))
-                    // after we updated the quiz its time to update the questions from the quiz
-                    .then(function() {
-                        self.saveQuestions(self.currentQuiz.id);
-                    });
+                    .then(console.log("geslaagd"));
+
             },
-            DeleteQuestion: function (questionId)
+            DeleteQuestion: function (questionToRemove)
             {
                 var self = this;
-                // todo First delete the answers for the current question
-                console.log("DeleteQuestion is running");
+                this.currentQuiz.questions.splice($.inArray(questionToRemove, this.currentQuiz.questions), 1);
                 $('#questiondiv'+ questionId).remove();
+            },
+            RemoveAnswer: function (selectedQuestion, answerToRemove) {
+                selectedQuestion.answerList.splice($.inArray(answerToRemove, selectedQuestion.answerList), 1);
             },
             AddQuestion: function (quizId, questionCollection)
             {
@@ -143,35 +125,16 @@
                 tempQuestion["quizId"] = quizId;
                 tempQuestion["sortId"] = $('span.questionSpan').length + 1;
 
-                var ajaxHeaders = new Headers();
-                ajaxHeaders.append("Content-Type", "application/json");
-                var ajaxConfig =
-                    {
-                        method: 'POST',
-                        body: JSON.stringify(tempQuestion),
-                        headers: ajaxHeaders
-                    };
-                let myRequest = new Request("https://localhost:44342/api/questions/add", ajaxConfig);
-                fetch(myRequest)
-                    .then(res => res.json())
-                    .then(function (res)
-                    {
-                        self.question = res;
-                    }).then(function() {
-                        questionCollection.push(self.question);
-                    });;
+                questionCollection.push(tempQuestion);
             },
             AddAnswer: function (questionId, answerList)
             {
                 var self = this;
-                alert(questionId);
-
-                this.answer = {};
-                this.answer["questionId"] = questionId;
-                this.answer["answerText"] = "";
-                this.answer["IsCorrectAnswer"] = false;
-                /* this.question["sortId"] = $('span.questionSpan').length + 1;*/
-                answerList.push(this.answer);
+                var tempAnswer = {};
+                tempAnswer["questionId"] = questionId;
+                tempAnswer["answerText"] = "";
+                tempAnswer["IsCorrectAnswer"] = false;
+                answerList.push(tempAnswer);
 
             },
             saveQuestions: function (quizId)

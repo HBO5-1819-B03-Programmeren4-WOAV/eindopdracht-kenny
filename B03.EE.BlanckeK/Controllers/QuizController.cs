@@ -1,8 +1,13 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using B03.EE.BlanckeK.Api.Repositories;
 using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace B03.EE.BlanckeK.Api.Controllers
 {
@@ -10,8 +15,11 @@ namespace B03.EE.BlanckeK.Api.Controllers
     [ApiController]
     public class QuizController : ControllerCrudBase<Quiz, QuizRepository>
     {
-        public QuizController(QuizRepository repository) : base(repository)
+        private QuizContext Db;
+
+        public QuizController(QuizRepository repository, QuizContext db) : base(repository)
         {
+            Db = db;
         }
 
         // GET api/quiz
@@ -56,6 +64,58 @@ namespace B03.EE.BlanckeK.Api.Controllers
         [Route("{quizId}")]
         public override async Task<IActionResult> Put([FromRoute] string quizId, [FromBody] Quiz quiz)
         {
+            Quiz existingQuiz = await Repository.GetAllInclusiveById(quizId);
+            List<Answer> newAnswers = new List<Answer>();
+
+            if (existingQuiz == null) return await base.Put(quizId, quiz);
+            foreach (var question in quiz.Questions)
+            {
+                if (question.Id == null)
+                {
+                    Db.Entry(question).State = EntityState.Added;
+                    foreach (var newAnswer in question.AnswerList)
+                    {
+                        Db.Entry(newAnswer).State = EntityState.Added;
+                    }
+                }
+                else
+                {
+                    if (existingQuiz.Questions.Any(eq => eq.Id == question.Id))
+                        Db.Entry(question).State = EntityState.Modified;
+                    else
+                    {
+                        Db.Entry(question).State = EntityState.Added;
+                        foreach (var answer in question.AnswerList)
+                        {
+                            Db.Entry(answer).State = EntityState.Added;
+                        }
+                    }
+
+                    foreach (var answer in question.AnswerList)
+                    {
+                        Db.Entry(answer).State = answer.Id == null ? EntityState.Added : EntityState.Modified;
+                        newAnswers.Add(answer);
+                    }
+                }
+            }
+            foreach (var existingQuestion in existingQuiz.Questions)
+            {
+                if (existingQuestion == null) continue;
+                if (quiz.Questions.Any(eq => eq.Id == existingQuestion.Id) == false)
+                {
+                    Db.Entry((object)existingQuestion).State = EntityState.Deleted;
+                }
+
+                foreach (var existingAnswer in existingQuestion.AnswerList)
+                {
+                    if (existingAnswer == null) continue;
+                    if (newAnswers.Any(ea => ea.Id == existingAnswer.Id) == false)
+                    {
+                        Db.Entry((object)existingAnswer).State = EntityState.Deleted;
+                    }
+                }
+                Db.Entry(quiz).State = EntityState.Modified;
+            }
             return await base.Put(quizId, quiz);
         }
     }

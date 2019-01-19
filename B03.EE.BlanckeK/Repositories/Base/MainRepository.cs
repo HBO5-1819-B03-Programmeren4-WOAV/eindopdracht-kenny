@@ -81,6 +81,7 @@ namespace B03.EE.BlanckeK.Api.Repositories.Base
 
         public async Task<T> Update(T entity)
         {
+
             Db.Entry(entity).State = EntityState.Modified;
             try
             {
@@ -93,9 +94,9 @@ namespace B03.EE.BlanckeK.Api.Repositories.Base
             return entity;
         }
 
-        private async Task<bool> Exists(string id)
+        public async Task<bool> Exists(List<T> entity, T newEntity)
         {
-            return await Db.Set<T>().AnyAsync(e => e.Id == id);
+            return await Db.Set<T>().AnyAsync(a => a.Id == newEntity.Id);
         }
     }
 }

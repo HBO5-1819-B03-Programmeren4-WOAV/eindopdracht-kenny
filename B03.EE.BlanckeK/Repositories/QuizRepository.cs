@@ -25,7 +25,6 @@ namespace B03.EE.BlanckeK.Api.Repositories
                 .Include(q => q.Questions)
                 .ThenInclude(a => a.AnswerList)
                 .ToListAsync();
-
         }
 
         public async Task<Quiz> GetAllInclusiveById(string id)
@@ -36,7 +35,6 @@ namespace B03.EE.BlanckeK.Api.Repositories
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        // returns a list of all the quizzes without to much details
         public async Task<List<QuizBasic>> GetQuizBasics()
         {
             return await Db.Quizzes.ProjectTo<QuizBasic>(Mapper.ConfigurationProvider).ToListAsync();
