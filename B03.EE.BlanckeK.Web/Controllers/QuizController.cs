@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using B03.EE.BlanckeK.Lib.DTO;
 using B03.EE.BlanckeK.Lib.Helpers;
 using B03.EE.BlanckeK.Lib.Models;
@@ -41,7 +42,9 @@ namespace B03.EE.BlanckeK.Web.Controllers
 
         public IActionResult CreateQuiz()
         {
-            return View();
+            ViewBag.UserId = _userManager.GetUserId(HttpContext.User);
+            ViewBag.Mode = "Create";
+            return View("EditQuiz", null);
         }
 
         public IActionResult EditQuiz(string id)
@@ -50,12 +53,13 @@ namespace B03.EE.BlanckeK.Web.Controllers
             ViewBag.Mode = "Edit";
             string quizDetailUri = $"{BaseUri}/{id}";
             Quiz quizDetail = ApiConverter.GetApiResult<Quiz>(quizDetailUri);
-            return quizDetail == null ? View("Error") : View(quizDetail);
+            return quizDetail == null ? View("Error") : View("EditQuiz",quizDetail);
         }
 
-        public IActionResult DeleteQuiz()
+        public async Task<IActionResult> DeleteQuiz(string id)
         {
-            return View(); 
+            await ApiConverter.DelCallApi<Quiz>($"{BaseUri}/{id}");
+            return RedirectToAction("Index");
         }
     }
 }

@@ -19,7 +19,7 @@
     modal.style.display = "block";
 }
 
-function validate() {
+function validateQuiz() {
     document.getElementById("answer").onclick = validate;
     var maxScore = document.getElementsByName("question").length;
     var score = 0;

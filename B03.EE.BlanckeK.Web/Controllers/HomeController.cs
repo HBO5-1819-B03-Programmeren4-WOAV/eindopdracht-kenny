@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using B03.EE.BlanckeK.Lib.Models;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using B03.EE.BlanckeK.Web.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace B03.EE.BlanckeK.Web.Controllers
 {
