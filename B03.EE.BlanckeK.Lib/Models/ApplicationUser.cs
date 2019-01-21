@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace B03.EE.BlanckeK.Lib.Models
