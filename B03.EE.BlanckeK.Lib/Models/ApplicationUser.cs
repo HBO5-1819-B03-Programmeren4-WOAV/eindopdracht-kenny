@@ -8,6 +8,6 @@ namespace B03.EE.BlanckeK.Lib.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public ICollection<Quiz> Quizzes { get; set; } // test
+        public ICollection<Quiz> Quizzes { get; set; }
     }
 }

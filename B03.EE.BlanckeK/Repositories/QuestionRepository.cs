@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using B03.EE.BlanckeK.Api.Repositories.Base;
-using B03.EE.BlanckeK.Lib.DTO;
 using B03.EE.BlanckeK.Lib.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +19,6 @@ namespace B03.EE.BlanckeK.Api.Repositories
         {
             return await GetAll()
                 .Include(q => q.AnswerList)
-                .OrderBy(a => a.SortId)
                 .ToListAsync();
         }
 
@@ -30,14 +27,7 @@ namespace B03.EE.BlanckeK.Api.Repositories
         {
             return await GetAll()
                 .Where(a => a.QuizId == id)
-                .OrderBy(a => a.SortId)
                 .ToListAsync();
         }
-
-       /* // returns a list of all questions but no to detailed
-        public async Task<List<QuestionBasic>> QuestionBasic()
-        {
-            return await Db.Questions.ProjectTo<QuestionBasic>(Mapper.ConfigurationProvider).ToListAsync();
-        }*/
     }
 }

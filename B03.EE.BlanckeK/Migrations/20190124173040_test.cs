@@ -180,8 +180,7 @@ namespace B03.EE.BlanckeK.Api.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     QuestionText = table.Column<string>(nullable: true),
-                    QuizId = table.Column<string>(nullable: true),
-                    SortId = table.Column<int>(nullable: false)
+                    QuizId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

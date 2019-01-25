@@ -1,5 +1,3 @@
-using System;
-
 namespace B03.EE.BlanckeK.Web.Models
 {
     public class ErrorViewModel

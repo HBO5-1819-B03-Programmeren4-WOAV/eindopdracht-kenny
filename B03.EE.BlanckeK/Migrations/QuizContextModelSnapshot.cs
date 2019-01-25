@@ -101,8 +101,6 @@ namespace B03.EE.BlanckeK.Api.Migrations
 
                     b.Property<string>("QuizId");
 
-                    b.Property<int>("SortId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("QuizId");
