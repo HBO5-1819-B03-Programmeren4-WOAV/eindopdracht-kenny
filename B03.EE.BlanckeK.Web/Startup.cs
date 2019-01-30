@@ -40,8 +40,8 @@ namespace B03.EE.BlanckeK.Web
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
-                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                facebookOptions.AppId = "363506724465228";
+                facebookOptions.AppSecret = "b0d644f71628b700060efe3e8db4500b";
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

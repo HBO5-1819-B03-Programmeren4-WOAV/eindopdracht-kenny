@@ -26,7 +26,7 @@ namespace B03.EE.BlanckeK.Web.Areas.Identity.Pages.Account
         {
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnPost(string returnUrl = "~/Quiz/Index")
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");

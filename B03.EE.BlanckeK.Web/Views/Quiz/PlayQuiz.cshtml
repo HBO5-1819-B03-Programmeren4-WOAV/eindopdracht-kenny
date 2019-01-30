@@ -8,12 +8,12 @@
 
 <article class="card">
     <div class="card-header text-center">You are playing '@Model.QuizName'</div>
-    <br/>
+    <br />
     <div class="card-body" style="margin-bottom: 0%">
         <div class="card">
             @foreach (var question in Model.Questions)
             {
-                <div id="login_for_review" class="modal hide"  role="dialog">
+                <div id="login_for_review" class="modal hide" role="dialog">
 
                 </div>
                 <div class="card">
@@ -33,7 +33,10 @@
             <button class="btn-success" type="button" onclick="validateQuiz()" id="answer" value="submit">Submit</button>
         </div>
     </div>
-    <div class="card-footer"><a asp-controller="Quiz" asp-action="Index" class="btn btn-primary">Back to list</a></div>
+    <div class="card-footer">
+        <a asp-controller="Quiz" asp-action="Index" class="btn btn-primary">Back to list</a>
+
+    </div>
 </article>
 
 <div id="myModal" class="modal">
@@ -42,7 +45,7 @@
         <span class="close">&times;</span>
         <p id="scoreBoard"></p>
     </div>
- </div>
+</div>
 
 
 

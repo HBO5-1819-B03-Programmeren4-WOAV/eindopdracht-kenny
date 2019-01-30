@@ -7,7 +7,7 @@ namespace B03.EE.BlanckeK.Lib.Helpers
 {
     public static class ApiConverter
     {
-        #region GetApiResult Metod
+        #region GetApiResult Method
         public static T GetApiResult<T>(string uri)
         {
             using (HttpClient httpClient = new HttpClient())

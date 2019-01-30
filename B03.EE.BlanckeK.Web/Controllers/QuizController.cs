@@ -12,7 +12,7 @@ namespace B03.EE.BlanckeK.Web.Controllers
     {
         #region variables
         private readonly UserManager<IdentityUser> _userManager;
-        private const string BaseUri = "https://localhost:44342/api/Quiz";
+        private const string BaseUri = "http://localhost:61716/api/quiz";
         #endregion
 
         #region Constructor

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace B03.EE.BlanckeK.Api.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20190124173040_test")]
-    partial class test
+    [Migration("20190130093351_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

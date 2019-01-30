@@ -57,7 +57,7 @@
 
     <div class="card-footer">
         <button v-on:click="SaveCompleteQuiz" class="btn btn-success">Save</button>
-        <a asp-controller="Quiz" asp-action="Index" class="btn btn-primary">Back to list</a>
+        <input type="button" onclick="location.href='../../quiz/index'" id="btnBackToList" class="btn btn-primary" value="Back to list"/>
     </div>
 </article>
 
@@ -73,7 +73,7 @@
             currentQuiz: [],
             userid: LoggedInUserid,
             isEdit: false,
-            apiUrl: "https://localhost:44342/api"
+            apiUrl: "http://localhost:61716/api"
         },
         created: function() {
             var self = this;
@@ -158,7 +158,8 @@
                     fetch(myRequest)
                         .then(res => res.json());
                 }
-                self.redirectToOverView();
+                redirectToOverView();
+
             },
             fetchQuizDetails: function() {
                 var self = this;
@@ -196,8 +197,9 @@
                     });
             },
             redirectToOverView: function () {
-                
-                window.location.href = "https://localhost:44304/Quiz";
+
+                document.getElementById("#btnBackToList").click();
+
             }
         }
     });

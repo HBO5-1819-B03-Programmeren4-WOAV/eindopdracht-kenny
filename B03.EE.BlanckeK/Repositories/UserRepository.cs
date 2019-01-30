@@ -27,7 +27,8 @@ namespace B03.EE.BlanckeK.Api.Repositories
             return _db.Users.Select(q => new UserBasic
             {
                 Id = q.Id,
-                UserName = $"{q.FirstName} {q.LastName}"
+                UserName = q.Email
+
             }).ToList();
         }
 

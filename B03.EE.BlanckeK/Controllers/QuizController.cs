@@ -51,12 +51,6 @@ namespace B03.EE.BlanckeK.Api.Controllers
             return Ok(await Repository.ListFiltered(user => user.Id == userId));
         }
 
-        [HttpPost]
-        public override async Task<IActionResult> Post([FromBody] Quiz quiz)
-        {
-            return await base.Post(quiz);
-        }
-
         [HttpPut]
         [Route("{quizId}")]
         public override async Task<IActionResult> Put([FromRoute] string quizId, [FromBody] Quiz quiz)
